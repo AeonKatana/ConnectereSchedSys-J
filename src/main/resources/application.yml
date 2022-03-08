@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    password: gmehrJi41M
+    url: jdbc:mysql://sql6.freemysqlhosting.net:3306/sql6477593
+    username: sql6477593
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans]: true
+        format_sql: true
+    show-sql: true
+  thymeleaf:
+    cache: false
