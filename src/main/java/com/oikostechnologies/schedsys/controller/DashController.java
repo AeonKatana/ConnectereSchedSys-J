@@ -6,11 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.oikostechnologies.schedsys.entity.Company;
-import com.oikostechnologies.schedsys.entity.view.Quickview;
 import com.oikostechnologies.schedsys.repo.QuickViewRepo;
 import com.oikostechnologies.schedsys.repo.TaskDetailRepo;
 import com.oikostechnologies.schedsys.service.CompanyService;
+import com.oikostechnologies.schedsys.service.DailyTaskService;
 import com.oikostechnologies.schedsys.service.UserService;
 
 @Controller
@@ -29,6 +28,9 @@ public class DashController {
 	@Autowired
 	private TaskDetailRepo detailrepo;
 	
+	@Autowired
+	private DailyTaskService dailyservice;
+	
 	@GetMapping("/")
 	public String dashboard(Model model) {
 		
@@ -36,6 +38,7 @@ public class DashController {
 		model.addAttribute("companycount", comservice.companycount());
 		model.addAttribute("view", qrepo.findAll());
 		model.addAttribute("completed", detailrepo.countCompleted());
+		model.addAttribute("dailies", dailyservice.countCompleted());
 		
 		return "dashboard";
 	}
@@ -55,6 +58,8 @@ public class DashController {
 	
 	@GetMapping("/dashboard/task/mytask")
 	public String task(Model model) {
+		model.addAttribute("mytask", dailyservice.getMyTasksByUserId(1L));
+		
 		return "task";
 	}
 	

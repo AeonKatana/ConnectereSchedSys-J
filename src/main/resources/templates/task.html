@@ -93,21 +93,34 @@
                 </div>
 
 
-                <div class="px-3 text-center border my-3 mx-5 h-100">
+                <div class="px-3 border my-3 mx-5" style="height: 450px;overflow: auto;">
 
-                   
+					<div class="text-center w-100">                   
                         <button type="button" id="framebtn" class="btnadd border m-3"><i class="fa fa-plus-circle" style="color: #009d63"></i> Add Task</button>
-              
-
-
-                    <div class="p-2">
-                        <iframe id="myframe" name="iframe_a" height="300px" width="85%" title="Iframe Example" class="justify-content-center" style="display: block;margin-left: auto;margin-right:auto;"></iframe>
+              		</div>
+                    <div class="p-0" id="sample" style="height: auto;">
+                        <iframe id="myframe" name="iframe_a" height="380px" width="85%" title="Iframe Example" class="justify-content-center" style="display: none;margin-left: auto;margin-right:auto;"></iframe>
                     </div>
-
-
-
+					
+				<div id="tasks" style="display : none;">
+					<div class="row m-2" th:each="task : ${mytask}">
+						<div class="col card">
+							<span>
+								<i class="fa-solid fa-ellipsis text-end p-2" style="float: right"></i>
+							</span>
+							<div class="card-body m-0">
+							<h4 class="card-text" th:text="${task.title}">Title Task</h4>
+							<input type="checkbox" id="done" th:checked="${task.done}">
+							<label for="done" th:text="${task.description}">This is where the task description will be</label>
+							<p class="card-text "><i class="fa-regular fa-calendar text-primary"></i><b id="mydate" class="m-2" th:text="${#temporals.monthName(task.starteddate) + ' ' + #temporals.day(task.starteddate)}">Mar 26 - 30</b></p>
+							</div>
+						</div>
+						
+					</div>
+				</div>
 
                 </div>
+                
             </div>
 
         </div>
@@ -133,9 +146,17 @@
 	<script>
 		
 		$(document).ready(function(){
+			
+			$("#tasks").fadeIn(1000);
+			
+			
 			var url = "/task/mytask/addtask";
-			$("#framebtn").click(function(){				
+			$("#framebtn").click(function(){
+				$("#framebtn").prop("disabled",true);
 				$("#myframe").attr("src", url);
+				$("#myframe").css("display", "block");	
+				
+				$("#myframe").prop("height", 400);
 			});
 		});
 	

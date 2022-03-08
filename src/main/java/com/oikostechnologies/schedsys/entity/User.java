@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
@@ -50,6 +51,9 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private Set<UserTask> tasks;
 	
+	
+	@OneToMany(mappedBy = "user")
+	private Set<DailyTask> dailies;
 	
 	@Transient
 	public String role() {
