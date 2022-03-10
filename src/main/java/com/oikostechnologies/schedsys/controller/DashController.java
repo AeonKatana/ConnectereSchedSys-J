@@ -1,6 +1,7 @@
 package com.oikostechnologies.schedsys.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oikostechnologies.schedsys.repo.QuickViewRepo;
 import com.oikostechnologies.schedsys.repo.TaskDetailRepo;
+import com.oikostechnologies.schedsys.security.MyUserDetails;
 import com.oikostechnologies.schedsys.service.CompanyService;
 import com.oikostechnologies.schedsys.service.DailyTaskService;
 import com.oikostechnologies.schedsys.service.UserService;
@@ -31,8 +33,11 @@ public class DashController {
 	@Autowired
 	private DailyTaskService dailyservice;
 	
-	@GetMapping("/")
+	
+	
+	@RequestMapping("/")
 	public String dashboard(Model model) {
+		
 		
 		model.addAttribute("usercount", userservice.usercount());
 		model.addAttribute("companycount", comservice.companycount());
@@ -57,8 +62,8 @@ public class DashController {
 	}
 	
 	@GetMapping("/dashboard/task/mytask")
-	public String task(Model model) {
-		model.addAttribute("mytask", dailyservice.getMyTasksByUserId(1L));
+	public String task(Model model, @AuthenticationPrincipal MyUserDetails userdetails) {
+		model.addAttribute("mytask", dailyservice.getMyTasksByUserId(userdetails.getUser().getId()));
 		
 		return "task";
 	}

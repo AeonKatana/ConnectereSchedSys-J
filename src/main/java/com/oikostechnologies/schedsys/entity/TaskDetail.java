@@ -1,5 +1,6 @@
 package com.oikostechnologies.schedsys.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -31,6 +32,9 @@ public class TaskDetail {
 	private LocalDateTime sdate;
 	private LocalDateTime edate;
 	private String status;
+	private boolean recurring;
+	private LocalDate until;
+	private String recurringday;
 	private boolean done;
 	
 	@OneToMany(mappedBy = "taskdetail")

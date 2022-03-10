@@ -9,6 +9,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.oikostechnologies.schedsys.entity.Company;
 import com.oikostechnologies.schedsys.entity.Department;
@@ -66,6 +67,8 @@ class SchedSysApplicationTests {
 	@Autowired
 	private QuickViewRepo qrepo;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	void contextLoads() {
 		
@@ -118,23 +121,21 @@ class SchedSysApplicationTests {
 		usertaskrepo.save(usertask);
 		
 	}
-
+	@Test
 	void createUser() {
 		
-		Company company = comrepo.findById(1L).orElse(null); // Accenture
 		
 		User user = User.builder()
 					.firstname("Rean")
 					.lastname("Schwarzer")
 					.contactno(639564412627L)
 					.email("rean@gmail.com")
-					.password("12345".toCharArray())
-					.enabled(false)
-					.company(company)
+					.password(passwordEncoder.encode("12345").toCharArray())
+					.enabled(true)
 					.build();
 		
 		Role role = Role.builder()
-					.rolename("MASTERADMIN")  // Create a new role (this is already built in) but we created it since it doesnt exist yet
+					.rolename("SUPERADMIN")  // Create a new role (this is already built in) but we created it since it doesnt exist yet
 					.build();
 		
 		
@@ -252,7 +253,7 @@ class SchedSysApplicationTests {
 		
 		
 	}
-	@Test
+	
 	void getCompanyandMasterAdmin() {
 		
 //		User u = userrepo.findAll().stream().filter(x -> x.role().equals("MASTERADMIN")).findFirst().get();

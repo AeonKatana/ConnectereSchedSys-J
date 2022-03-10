@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,6 +35,7 @@ public class Company {
 	private Set<Department> departments;
 	
 	@OneToMany(mappedBy = "company")
+	@Fetch(FetchMode.JOIN)
 	private Set<User> user;
 	
 	

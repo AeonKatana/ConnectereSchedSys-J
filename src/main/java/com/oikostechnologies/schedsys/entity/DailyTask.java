@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,6 +29,7 @@ public class DailyTask {
 	private String title;
 	private LocalDate starteddate;
 	private String description;
+	@Default
 	private String note = "No Notes";
 	private LocalDate until;
 	private boolean recurring;

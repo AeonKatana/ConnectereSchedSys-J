@@ -22,9 +22,9 @@ public class DailyTaskServiceImp implements DailyTaskService {
 	private UserRepo userrepo;
 	
 	@Override
-	public DailyTaskModel addMyTask(DailyTaskModel model) {
+	public DailyTaskModel addMyTask(DailyTaskModel model, User user) {
 		
-		User user = userrepo.findById(1L).orElse(null);
+		
 		
 		DailyTask task = new DailyTask();
 		task.setTitle(model.getTitle());

@@ -136,7 +136,7 @@
                         </ul>
                       </div>
                 </div>
-                <div class="col">
+              <div class="col" th:if="${not #lists.isEmpty(view)}">
                     <table class="table bg-white rounded shadow-sm  table-hover">
                         <thead>
                             <tr>
@@ -170,6 +170,9 @@
                             
                         </tbody>
                     </table>
+                </div> 
+                <div class="col m-5" th:unless="${not #lists.isEmpty(view)}">
+                		<h5 class="text-center m-5">There are no currently assigned tasks within the departments</h5>
                 </div>
             </div>
 

@@ -31,6 +31,7 @@ public class UserDepartment {
 	@ManyToOne
 	private Department department;
 	
+	private String deptrole;
 	
 	@Transient
 	public String username() {

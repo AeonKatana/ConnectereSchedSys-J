@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.oikostechnologies.schedsys.entity.User;
-import com.oikostechnologies.schedsys.projection.UserDTO;
 import com.oikostechnologies.schedsys.projection.UserDeptDTO;
 
 public interface UserRepo extends JpaRepository<User, Long> {
@@ -37,7 +36,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	@Query("Select u from User u join u.userrole ur join ur.role r order by :param")
 	List<User> getAllByOrderBy(@Param("param") String param);
 	
-	
+	User findByEmail(String email);
 	
 	
 }

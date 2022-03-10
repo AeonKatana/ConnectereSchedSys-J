@@ -1,6 +1,7 @@
 package com.oikostechnologies.schedsys.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.oikostechnologies.schedsys.entity.DailyTask;
 import com.oikostechnologies.schedsys.model.DailyTaskModel;
+import com.oikostechnologies.schedsys.security.MyUserDetails;
 import com.oikostechnologies.schedsys.service.DailyTaskService;
 
 @Controller
@@ -33,9 +34,9 @@ public class TaskController {
 	
 	@PostMapping("/savemytask")
 	@ResponseBody
-	public DailyTaskModel saveMyTask(@RequestBody DailyTaskModel daily) {
+	public DailyTaskModel saveMyTask(@RequestBody DailyTaskModel daily , @AuthenticationPrincipal MyUserDetails userdetails) {
 		
-		DailyTaskModel task = dailyservice.addMyTask(daily);
+		DailyTaskModel task = dailyservice.addMyTask(daily , userdetails.getUser());
 		
 		return task;
 	}
