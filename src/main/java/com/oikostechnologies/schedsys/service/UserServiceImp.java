@@ -20,7 +20,7 @@ public class UserServiceImp implements UserService {
 		return userrepo.count();
 	}
 
-	public List<User> getUsersByRole(long role){
+	public List<User> getUsersByRole(String role){
 		return userrepo.getUsersByRole(role);
 	}
 

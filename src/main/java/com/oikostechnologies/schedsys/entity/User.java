@@ -67,7 +67,7 @@ public class User {
 		try {
 			return company.getCompname();
 		}catch(Exception e) {
-			return "No Company";
+			return "Does not belong to a company";
 		}
 	}
 	

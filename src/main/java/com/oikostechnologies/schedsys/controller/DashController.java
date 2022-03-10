@@ -57,7 +57,7 @@ public class DashController {
 	@GetMapping("/dashboard/companies")
 	public String companylist(Model model) {
 		
-		model.addAttribute("masteradmincomp", userservice.getUsersByRole(1L));
+		model.addAttribute("masteradmincomp", userservice.getUsersByRole("MASTERADMIN"));
 		return "companyprofile";
 	}
 	

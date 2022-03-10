@@ -11,8 +11,8 @@ import com.oikostechnologies.schedsys.projection.UserDeptDTO;
 
 public interface UserRepo extends JpaRepository<User, Long> {
 
-	@Query("Select u from User u join u.userrole ur join ur.role r where r.id = :role")
-	List<User> getUsersByRole(@Param("role")long role);
+	@Query("Select u from User u join u.userrole ur join ur.role r where r.rolename = :role")
+	List<User> getUsersByRole(@Param("role")String role);
 	
 //	@Query("Select u.id as id , d.id as deptid , t.id as taskid , user.firstname as firstname, d.deptname as deptname, t.taskname as taskname"
 //			+ ", sum((case when td.done = true then 1 else 0 end)) as completed , count(td.id) as totaltask from User u join u.userdepartment ud join ud.department d join"

@@ -226,15 +226,15 @@ class SchedSysApplicationTests {
 	}
 	
 	
-	void getMasterAdmins() {
-		
-		for(User user : userrepo.getUsersByRole(1L)) {
-			System.out.println(user.getFirstname() + " " + user.getLastname());
-			System.out.println(user.getUserrole().stream().findFirst().get().getRole().getRolename());
-		}
-		
-		
-	}
+//	void getMasterAdmins() {
+//		
+//		for(User user : userrepo.getUsersByRole(1L)) {
+//			System.out.println(user.getFirstname() + " " + user.getLastname());
+//			System.out.println(user.getUserrole().stream().findFirst().get().getRole().getRolename());
+//		}
+//		
+//		
+//	}
 
 	void getTaskDeptNull() {
 		
@@ -260,10 +260,10 @@ class SchedSysApplicationTests {
 //		System.out.println(u.fullname());
 //		System.out.println(u.companyname());
 		
-		User u = userrepo.getUsersByRole(1L).stream().findFirst().get();
-		System.out.println(u.getFirstname());
-		System.out.println(u.companyname());
-		System.out.println(u.getCompany().usercount());
+//		User u = userrepo.getUsersByRole(1L).stream().findFirst().get();
+//		System.out.println(u.getFirstname());
+//		System.out.println(u.companyname());
+//		System.out.println(u.getCompany().usercount());
 		
 	}
 	
