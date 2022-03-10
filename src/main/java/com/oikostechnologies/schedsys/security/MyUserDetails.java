@@ -27,6 +27,10 @@ public class MyUserDetails implements UserDetails {
 		return this.user.fullname();
 	}
 	
+	public String getRolename() {
+		return this.user.role();
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<SimpleGrantedAuthority> grantedauthorities = new ArrayList<>();	
