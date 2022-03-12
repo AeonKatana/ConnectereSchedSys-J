@@ -1,8 +1,11 @@
 package com.oikostechnologies.schedsys.controller;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -50,8 +53,10 @@ public class DashController {
 		model.addAttribute("dailies", dailyservice.countCompleted());
 		
 		ZoneId myzone = ZoneId.of("Asia/Manila");
-		System.out.println("Date today is :" + LocalDateTime.now().atZone(myzone));
-		
+		model.addAttribute("date","Date today is :" + LocalDateTime.now().atZone(myzone));
+		System.out.println(Instant.now().atZone(myzone).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.FULL)));
+		System.out.println(Instant.now().atZone(myzone));
+		System.out.println(LocalDateTime.ofInstant(Instant.now(), myzone));
 		return "dashboard";
 	}
 	
