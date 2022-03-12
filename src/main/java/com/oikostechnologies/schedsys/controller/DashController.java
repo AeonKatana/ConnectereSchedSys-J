@@ -1,5 +1,7 @@
 package com.oikostechnologies.schedsys.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -44,6 +46,8 @@ public class DashController {
 		model.addAttribute("view", qrepo.findAll());
 		model.addAttribute("completed", detailrepo.countCompleted());
 		model.addAttribute("dailies", dailyservice.countCompleted());
+		
+		System.out.println("Date today is :" + LocalDate.now());
 		
 		return "dashboard";
 	}
