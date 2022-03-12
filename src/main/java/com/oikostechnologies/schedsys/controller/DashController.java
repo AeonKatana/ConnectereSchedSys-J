@@ -2,6 +2,7 @@ package com.oikostechnologies.schedsys.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -48,7 +49,8 @@ public class DashController {
 		model.addAttribute("completed", detailrepo.countCompleted());
 		model.addAttribute("dailies", dailyservice.countCompleted());
 		
-		System.out.println("Date today is :" + LocalDateTime.now());
+		ZoneId myzone = ZoneId.of("Asia/Manila");
+		System.out.println("Date today is :" + LocalDateTime.now().atZone(myzone).toLocalDateTime());
 		
 		return "dashboard";
 	}
