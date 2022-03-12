@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
@@ -52,11 +53,9 @@ public class DashController {
 		model.addAttribute("completed", detailrepo.countCompleted());
 		model.addAttribute("dailies", dailyservice.countCompleted());
 		
-		ZoneId myzone = ZoneId.of("Asia/Manila");
-		model.addAttribute("date","Date today is :" + LocalDateTime.now().atZone(myzone));
-		System.out.println(Instant.now().atZone(myzone).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.FULL)));
-		System.out.println(Instant.now().atZone(myzone));
-		System.out.println(LocalDateTime.ofInstant(Instant.now(), myzone));
+		
+		System.out.println(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDateTime());
+		
 		return "dashboard";
 	}
 	

@@ -3,6 +3,7 @@ package com.oikostechnologies.schedsys.service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,12 @@ public class DailyTaskServiceImp implements DailyTaskService {
 		task.setRecurring(model.isRecurring());
 		task.setNote(model.getNote());
 		if(!model.isRecurring()) {
-			task.setUntil(LocalDate.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")));
+			task.setUntil(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDate());
 		}
 		else {
 			task.setUntil(LocalDate.parse(model.getUntil()));
 		}
-		task.setStarteddate(LocalDate.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")));
+		task.setStarteddate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDate());
 		
 		task.setDescription(model.getTaskdetail());
 		task.setUser(user);
