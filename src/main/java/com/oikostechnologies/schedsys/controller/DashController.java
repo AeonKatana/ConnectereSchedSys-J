@@ -50,7 +50,7 @@ public class DashController {
 		model.addAttribute("dailies", dailyservice.countCompleted());
 		
 		ZoneId myzone = ZoneId.of("Asia/Manila");
-		System.out.println("Date today is :" + LocalDateTime.now().atZone(myzone).toLocalDateTime());
+		System.out.println("Date today is :" + LocalDateTime.now().atZone(myzone));
 		
 		return "dashboard";
 	}
