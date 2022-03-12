@@ -64,7 +64,7 @@
                     <a th:href="@{/}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold "><i
                             class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a th:href="@{/dashboard/companies}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                            class="fas fa-user me-2" ></i>Company</a>
+                            class="fas fa-building me-2" ></i>Company</a>
                     <a th:href="@{/dashboard/personnel}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
                             class="fas fa-user-group me-2"></i>Personnel</a>
                      <a th:href="@{/dashboard/task/mytask}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
@@ -116,12 +116,15 @@
         </nav>
 
         
-        <div class="container">
-            <button type="button" class="btn btn-success btn-md"  data-bs-toggle="modal" data-bs-target="#add" style="float: right;">Add</button>    
+         <div class="container text-end">
+         	<form>
+         		<input class="search" type="text"  placeholder=" search personnel..." style="font-family: Helvetica;"> 
+         		<input type="submit" value="Search">
+         	</form>             
           </div>
         
 
-        <div class="container-fluid px-3 p-5">
+        <div class="container-fluid px-3 p-2">
                     <div class="p-3 shadow-sm d-flex justify-content-around align-items-center rounded">
             <div class="col" th:if="${not #lists.isEmpty(masteradmins)}">
                 <table class="table bg-white rounded shadow-sm  table-hover">
@@ -132,7 +135,6 @@
                             <th scope="col">Company</th>
                             <th scope="col">Role</th>
                             <th scope="col">View Details</th>
-                           
                         </tr>
                     </thead>
                     <tbody>

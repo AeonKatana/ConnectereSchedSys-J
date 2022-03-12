@@ -26,7 +26,7 @@
                 <a th:href="@{/}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold "><i
                             class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a th:href="@{/dashboard/companies}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                            class="fas fa-user me-2" ></i>Company</a>
+                            class="fas fa-building me-2" ></i>Company</a>
                     <a th:href="@{/dashboard/personnel}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                             class="fas fa-user-group me-2"></i>Personnel</a>
                                   <a th:href="@{/dashboard/task/mytask}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
@@ -77,21 +77,22 @@
 
                 <div class="pt-2 bg-white d-flex justify-content-around align-items-center rounded">
 
+				<div class="d-flex">
                     <a class="atask" th:href="@{/dashboard/task/mytask}">
                         <div class="btn-wrap">
-                            <button type="button" class="btnmytask"><i style="color:#f2c85b" class="fa fa-list-alt"></i> My Task</button>
+                            <button type="button" class="btnmytask"> My Task</button>
                         </div>
                     </a>
-
+                     &nbsp;&nbsp;
                     <a class="atask" th:href="@{/dashboard/task/assignedtask}">
                         <div class="btn-wrap">
-                            <button type="button" class="btntask"><i style="color:#0077b6" class="fa fa-list-alt"></i> Personnel's Task</button>
+                            <button type="button" class="btntask"> Personnel's Task</button>
                         </div>
                     </a>
+				</div>
 
 
-
-                </div>
+                </div>	
 
 
                 <div class="px-3 border my-3 mx-5" style="height: 450px;overflow: auto;">
