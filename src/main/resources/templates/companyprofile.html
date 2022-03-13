@@ -20,6 +20,52 @@
 
 </head>
 <body>
+ <div class="modal fade" id="addcompany" tabindex="-1" aria-labelledby="addcompanyModal" aria-hidden="true">
+    <div class="modal-dialog">
+     <form id="addcomp" th:action="@{/companies/addcompany}" method="POST">
+      <div class="modal-content">
+        <div class="modal-header">
+        	<h5 class="modal-title">Add details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           
+                <div class="mb-3">
+                  <label for="companyname" class="form-label fw-bold">Company name</label>
+                  <input type="text" class="form-control" id="company" name="companyname" placeholder="Enter Company Name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="companycolor" class="form-label fw-bold">Company Color</label>
+                  <input type="color" class="form-control" id="color" name="companycolor" placeholder="Enter Company Name" required>
+                </div>
+                <div class="mb-3">
+                	<hr>
+                	<p>Master Admin Details</p>
+                    <label for="firstname" class="form-label fw-bold">Firstname :</label>
+                    <input type="text" class="form-control" id="firstname" name="fname" placeholder="Enter Firstname" required>
+                  </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label fw-bold">Lastname</label>
+                    <input type="text" class="form-control" id="lastname" name="lname" placeholder="Enter Lastname" required>
+                </div>
+                <div class="mb-3">
+                    <label for="contact" class="form-label fw-bold">Contact No:</label>
+                    <input type="tel" class="form-control" id="contact" name="contact" placeholder="639123456789" pattern="[63]{2}[0-9]{10}" required>
+                </div>
+                 <div class="mb-3">
+                    <label for="email" class="form-label fw-bold">Email Address:</label>
+                    <input type="email" class="form-control" id="email" name="useremail" placeholder="sample@gmail.com" required>
+                </div>
+           
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </div>
+       </form>
+    </div>
+  </div>
 	<div class="d-flex" id="wrapper">
 
 		<!----Sidebar STARTS here---->
@@ -138,7 +184,7 @@
 
 	</div>
 
-
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
@@ -149,6 +195,6 @@
 			el.classList.toggle("toggled");
 		};
 	</script>
-
+	<script th:src="@{/js/company.js}"></script>
 </body>
 </html>

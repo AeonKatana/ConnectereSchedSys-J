@@ -38,6 +38,7 @@ public class Company {
 	@Fetch(FetchMode.JOIN)
 	private Set<User> user;
 	
+	private String color;
 	
 	@Transient
 	public int usercount() {
