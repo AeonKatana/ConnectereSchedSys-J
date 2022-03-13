@@ -12,5 +12,6 @@ public interface DailyTaskService {
 	public List<DailyTask>
 	getMyTasksByUserId(long id);
 	public long countCompleted();
+	public long countDailyToday();
 	
 }

@@ -54,7 +54,7 @@ public class DailyTaskServiceImp implements DailyTaskService {
 	public List<DailyTask> getMyTasksByUserId(long id) {
 		
 		User user = userrepo.findById(id).orElse(null);
-		List<DailyTask> mytasks = dailyrepo.findAllByUser(user);
+		List<DailyTask> mytasks = dailyrepo.findAllByUserOrderByStarteddateDesc(user);
 		
 		for(DailyTask dt : mytasks) {
 			System.out.println("My Task :" + dt.getTitle());
@@ -65,8 +65,13 @@ public class DailyTaskServiceImp implements DailyTaskService {
 
 	@Override
 	public long countCompleted() {
-	
 		return dailyrepo.count();
 	}
+	
+	@Override
+	public long countDailyToday() {		
+		return dailyrepo.countDailyToday(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDate());
+	}
+	
 
 }

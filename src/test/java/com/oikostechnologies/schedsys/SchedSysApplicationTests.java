@@ -33,6 +33,7 @@ import com.oikostechnologies.schedsys.repo.UserDepartmentRepo;
 import com.oikostechnologies.schedsys.repo.UserRepo;
 import com.oikostechnologies.schedsys.repo.UserRoleRepo;
 import com.oikostechnologies.schedsys.repo.UserTaskRepo;
+import com.oikostechnologies.schedsys.service.DailyTaskService;
 
 @SpringBootTest
 class SchedSysApplicationTests {
@@ -66,6 +67,9 @@ class SchedSysApplicationTests {
 	
 	@Autowired
 	private QuickViewRepo qrepo;
+	
+	@Autowired
+	private DailyTaskService dailyservice;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -121,7 +125,7 @@ class SchedSysApplicationTests {
 		usertaskrepo.save(usertask);
 		
 	}
-	@Test
+
 	void createUser() {
 		
 		
@@ -266,5 +270,10 @@ class SchedSysApplicationTests {
 //		System.out.println(u.getCompany().usercount());
 		
 	}
+	@Test
+	void countDailiesForToday() {
+		System.out.println(dailyservice.countDailyToday());
+	}
+	
 	
 }

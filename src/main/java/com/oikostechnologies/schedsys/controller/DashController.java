@@ -1,12 +1,8 @@
 package com.oikostechnologies.schedsys.controller;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -51,7 +47,7 @@ public class DashController {
 		model.addAttribute("companycount", comservice.companycount());
 		model.addAttribute("view", qrepo.findAll());
 		model.addAttribute("completed", detailrepo.countCompleted());
-		model.addAttribute("dailies", dailyservice.countCompleted());
+		model.addAttribute("dailies", dailyservice.countDailyToday());
 		
 		
 		System.out.println(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDateTime());
