@@ -86,5 +86,13 @@ public class User {
 		}
 		
 	}
+	@Transient
+	public String companycolor() {
+		try {
+			return company.getColor();
+		}catch(Exception e) {
+			return "black";
+		}
+	}
 	
 }

@@ -142,7 +142,7 @@ xmlns:th="http://www.thymeleaf.org">
                         <tr th:each="masteradmin : ${masteradmins}">
                             <th scope="row" th:text="${masteradmin.id}">1</th>
                             <td th:text="${masteradmin.firstname + ' ' + masteradmin.lastname}">Liam Payne</td>
-                            <td th:text="${masteradmin.companyname}">No company</td>
+                            <td th:text="${masteradmin.companyname}" th:style="${'color :' + masteradmin.companycolor}">No company</td>
                             <td th:text="${masteradmin.role}">Master Admin</td>
                             <td><button type="button" class="btn btn-primary btn-md ;">View Details</button></td>
                         </tr>
