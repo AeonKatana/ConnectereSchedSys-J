@@ -76,17 +76,19 @@
 
                 <div class="pt-2 bg-white d-flex justify-content-around align-items-center rounded">
 
+                    <div class="d-flex">
                     <a class="atask" th:href="@{/dashboard/task/mytask}">
                         <div class="btn-wrap">
-                            <button type="button" class="btntask"><i class="fa fa-list-alt" style="color:#f2c85b"></i> My Task</button>
+                            <button type="button" class="btntask"> My Task</button>
                         </div>
                     </a>
-
+                     &nbsp;&nbsp;
                     <a class="atask" th:href="@{/dashboard/task/assignedtask}">
                         <div class="btn-wrap">
-                            <button type="button" class="btnpnl"><i class="fa fa-list-alt" style="color:#0077b6"></i> Personnel's Task</button>
+                            <button type="button" class="btnpnl"> Personnel's Task</button>
                         </div>
                     </a>
+				</div>
 
 
                 </div>
@@ -95,7 +97,7 @@
                             <button id="framebtn" type="button" class="btnadd border m-3"><i class="fa fa-plus-circle" style="color: #009d63"></i> Add Task</button>
                                     
                  <div class="p-1">
-                    <iframe name="iframe_a" id="myframe" height="450px" width="85%" title="Iframe Example" class="justify-content-center" style="display: block;margin-left: auto;margin-right:auto;"></iframe>
+                    <iframe name="iframe_a" id="myframe" height="450px" width="85%" title="Iframe Example" class="justify-content-center" style="display: none;margin-left: auto;margin-right:auto;"></iframe>
                 </div>
             <!-- <div id="tasks" style="display : none;">
 					<div class="row m-2" th:each="task : ${mytask}">
@@ -142,6 +144,7 @@
 			var url = "/task/assignedtask/addtask";
 			$("#framebtn").click(function(){				
 				$("#myframe").attr("src", url);
+				$("#myframe").css("display", "block");	
 			});
 			
 		});
