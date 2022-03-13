@@ -164,7 +164,7 @@
 							<tbody>
 								<tr th:each="comp : ${masteradmincomp}">
 
-									<td th:text="${comp.companyname}">Liam Payne</td>
+									<td th:text="${comp.companyname}" th:style="${'color :' + comp.company.color}">Liam Payne</td>
 									<td th:text="${comp.fullname}"></td>
 									<td th:text="${comp.companysize}"></td>
 									<td><button type="button" class="btn btn-primary btn-md ;">View
