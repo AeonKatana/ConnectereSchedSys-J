@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					System.out.println(exception);
 					
 				}
-			})
+			}).failureUrl("/login-page?error")
 			.and()
 			.logout().logoutUrl("/perform-logout")
 			.invalidateHttpSession(true)

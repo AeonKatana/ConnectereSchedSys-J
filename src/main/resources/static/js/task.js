@@ -15,7 +15,7 @@ $(document).ready(function(){
 		window.parent.document.getElementById('framebtn').removeAttribute("disabled");
 		window.parent.document.getElementById('myframe').setAttribute("height", 0);
 	});
-	
+	 
 	
 	
 	
