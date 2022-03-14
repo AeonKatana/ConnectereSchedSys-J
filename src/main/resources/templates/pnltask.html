@@ -142,9 +142,11 @@
 		$(document).ready(function(){
 			
 			var url = "/task/assignedtask/addtask";
-			$("#framebtn").click(function(){				
+			$("#framebtn").click(function(){		
+				$("#framebtn").prop("disabled",true);
 				$("#myframe").attr("src", url);
 				$("#myframe").css("display", "block");	
+				$("#myframe").prop("height", 450);
 			});
 			
 		});
