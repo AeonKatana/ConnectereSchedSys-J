@@ -58,13 +58,16 @@ public class DashController {
 	@GetMapping("/dashboard/personnel")
 	public String personel(Model model) {
 		model.addAttribute("masteradmins", userservice.findAllUsers());
+		model.addAttribute("totalelement", userservice.findAllUsers().getTotalElements());
+		model.addAttribute("totalpage", userservice.findAllUsers().getTotalPages());;
 		return "personnel";
 	}
 	
 	@GetMapping("/dashboard/companies")
 	public String companylist(Model model) {
-		
-		model.addAttribute("masteradmincomp", userservice.getUsersByRole("MASTERADMIN"));
+		model.addAttribute("masteradmincomp", comservice.getCompanies());
+		model.addAttribute("totalelement", comservice.getCompanies().getTotalElements());
+		model.addAttribute("totalpage", comservice.getCompanies().getTotalPages());
 		return "companyprofile";
 	}
 	

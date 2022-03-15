@@ -1,18 +1,22 @@
 package com.oikostechnologies.schedsys.repo;
 
+
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.oikostechnologies.schedsys.entity.Company;
 import com.oikostechnologies.schedsys.entity.User;
 import com.oikostechnologies.schedsys.projection.UserDeptDTO;
 
 public interface UserRepo extends JpaRepository<User, Long> {
 
 	@Query("Select u from User u join u.userrole ur join ur.role r where r.rolename = :role")
-	List<User> getUsersByRole(@Param("role")String role);
+	Page<User> getUsersByRole(@Param("role")String role, Pageable pageable);
 	
 //	@Query("Select u.id as id , d.id as deptid , t.id as taskid , user.firstname as firstname, d.deptname as deptname, t.taskname as taskname"
 //			+ ", sum((case when td.done = true then 1 else 0 end)) as completed , count(td.id) as totaltask from User u join u.userdepartment ud join ud.department d join"
@@ -38,6 +42,9 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	
 	User findByEmail(String email);
 	
+	Page<User> findByFirstnameOrLastnameLike(String firstname, String lastname , Pageable page);
+	
+
 	
 }
 

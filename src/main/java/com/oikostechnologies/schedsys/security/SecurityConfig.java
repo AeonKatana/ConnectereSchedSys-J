@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 			.authorizeRequests()
 			.antMatchers("/resources/**").permitAll()
-			.antMatchers("/","/dashboard/**","/task/mytask/**", "/task/assignedtask/**", "/task/savemytask").authenticated()
+			.antMatchers("/","/dashboard/**","/task/mytask/**", "/task/assignedtask/**", "/task/savemytask","/personnel/**","/companies/**").authenticated()
 			.and()
 			.formLogin().loginPage("/login-page").usernameParameter("email").passwordParameter("pass")
 			.loginProcessingUrl("/perform-login")

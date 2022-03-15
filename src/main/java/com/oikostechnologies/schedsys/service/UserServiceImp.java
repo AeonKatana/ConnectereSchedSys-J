@@ -1,8 +1,8 @@
 package com.oikostechnologies.schedsys.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.oikostechnologies.schedsys.entity.User;
@@ -20,14 +20,19 @@ public class UserServiceImp implements UserService {
 		return userrepo.count();
 	}
 
-	public List<User> getUsersByRole(String role){
-		return userrepo.getUsersByRole(role);
+	public Page<User> getUsersByRole(String role){
+		return userrepo.getUsersByRole(role, PageRequest.of(0, 5));
 	}
 
 	@Override
-	public List<User> findAllUsers() {
+	public Page<User> findAllUsers() {
+		return userrepo.findAll(PageRequest.of(0, 10));
+	}
+
+	@Override
+	public Page<User> searchUser(String search) {
 		
-		return userrepo.findAll();
+		return userrepo.findByFirstnameOrLastnameLike(search, search , PageRequest.of(0, 5));
 	}
 
 	

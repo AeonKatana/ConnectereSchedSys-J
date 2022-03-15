@@ -138,9 +138,9 @@
 
 			<div class="container-fluid px-3 p-2">
 				<div class="text-end">
-				<form class="float-right">
+				<form class="float-right" th:action="@{/companies/search}">
 					<input class="search mx-3 text-right p-1" type="text"
-						placeholder=" search company..." style="font-family: Helvetica;">
+						placeholder=" search company..." name="search" style="font-family: Helvetica;">
 					<input type="submit" value="Search" class="btn btn-outline-primary">
 				</form>
 				</div>
@@ -149,7 +149,7 @@
 						company</button>
 				<div
 					class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
-					<div class="col" th:if="${not #lists.isEmpty(masteradmincomp)}">
+					<div class="col" th:if="${totalpage != 0}">
 						<table class="table bg-white rounded shadow-sm  table-hover">
 							<thead>
 								<tr>
@@ -164,18 +164,17 @@
 							<tbody>
 								<tr th:each="comp : ${masteradmincomp}">
 
-									<td th:text="${comp.companyname}" th:style="${'color :' + comp.company.color}">Liam Payne</td>
-									<td th:text="${comp.fullname}"></td>
-									<td th:text="${comp.companysize}"></td>
+									<td th:text="${comp.compname}" th:style="${'color :' + comp.color}">Liam Payne</td>
+									<td th:text="${comp.masteradmin}"></td>
+									<td th:text="${comp.usercount}"></td>
 									<td><button type="button" class="btn btn-primary btn-md ;">View
 											Details</button></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					<div class="col" th:unless="${not #lists.isEmpty(masteradmincomp)}">
-						<h5 class="text-center m-5">There are no currently companies
-							on this system</h5>
+					<div class="col" th:unless="${totalpage != 0}">
+						<h5 class="text-center m-5">No companies found</h5>
 					</div>
 				</div>
 			</div>

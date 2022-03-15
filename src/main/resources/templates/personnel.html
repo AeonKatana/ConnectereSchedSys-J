@@ -118,8 +118,8 @@ xmlns:th="http://www.thymeleaf.org">
 
         
          <div class="container text-end">
-         	<form>
-         		<input class="search" type="text"  placeholder=" search personnel..." style="font-family: Helvetica;"> 
+         	<form th:action="@{/personnel/search}">
+         		<input class="search" type="text" name="search"  placeholder=" search personnel..." style="font-family: Helvetica;"> 
          		<input type="submit" value="Search">
          	</form>             
           </div>
@@ -127,7 +127,7 @@ xmlns:th="http://www.thymeleaf.org">
 
         <div class="container-fluid px-3 p-2">
                     <div class="p-3 shadow-sm d-flex justify-content-around align-items-center rounded">
-            <div class="col" th:if="${not #lists.isEmpty(masteradmins)}">
+            <div class="col" th:if="${totalpage != 0}">
                 <table class="table bg-white rounded shadow-sm  table-hover">
                     <thead>
                         <tr>
@@ -149,8 +149,8 @@ xmlns:th="http://www.thymeleaf.org">
                     </tbody>
                 </table>
             </div>
-            <div class="col" th:unless="${not #lists.isEmpty(masteradmins)}">
-            	<h5 class="text-center m-5">There are no currently users on this system except to the Super Admin</h5>
+            <div class="col" th:unless="${totalpage != 0}">
+            	<h5 class="text-center m-5">No Data</h5>
             </div>
         </div>
     </div>

@@ -1,13 +1,13 @@
 package com.oikostechnologies.schedsys.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.oikostechnologies.schedsys.entity.User;
 
 public interface UserService {
 
 	public long usercount();
-	public List<User> getUsersByRole(String role);
-	public List<User> findAllUsers();
-	
+	public Page<User> getUsersByRole(String role);
+	public Page<User> findAllUsers();
+	public Page<User> searchUser(String search);
 }

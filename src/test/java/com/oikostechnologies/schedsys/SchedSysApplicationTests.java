@@ -9,6 +9,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.oikostechnologies.schedsys.entity.Company;
@@ -270,10 +271,19 @@ class SchedSysApplicationTests {
 //		System.out.println(u.getCompany().usercount());
 		
 	}
-	@Test
+	
 	void countDailiesForToday() {
 		System.out.println(dailyservice.countDailyToday());
 	}
 	
+	void getCompany() {
+		
+		for(Company c : comrepo.findByCompnameLike("samplecompany", PageRequest.of(0, 1))) {
+			System.out.println(c.getCompname());
+			System.out.println(c.usercount());
+			System.out.println(c.getUser().stream().filter(x -> x.role().equalsIgnoreCase("MASTERADMIN")).findFirst().get().fullname());
+		}
+		
+	}
 	
 }

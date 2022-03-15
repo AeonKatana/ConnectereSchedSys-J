@@ -42,13 +42,15 @@ public class Company {
 	
 	@Transient
 	public int usercount() {
-		
 		return user.size();
 	}
 	@Transient
 	public int deptcount() {
 		return departments.size();
 	}
-	
+	@Transient
+	public String masteradmin() {
+		return user.stream().filter(x -> x.role().equalsIgnoreCase("MASTERADMIN")).findFirst().get().fullname();
+	}
 	
 }
