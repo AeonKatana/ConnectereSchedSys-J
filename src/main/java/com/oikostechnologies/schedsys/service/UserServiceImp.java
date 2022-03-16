@@ -26,13 +26,25 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public Page<User> findAllUsers() {
-		return userrepo.findAll(PageRequest.of(0, 10));
+		return userrepo.findAll(PageRequest.of(0, 5));
 	}
 
+	
+	
 	@Override
 	public Page<User> searchUser(String search) {
 		
 		return userrepo.findByFirstnameOrLastnameLike(search, search , PageRequest.of(0, 5));
+	}
+
+	@Override
+	public Page<User> findAllUsers(int page) {
+		return userrepo.findAll(PageRequest.of(page, 5));
+	}
+
+	@Override
+	public Page<User> findAllUsers(int page, String search) {
+		return userrepo.findAllByFirstnameContaining(search , PageRequest.of(page, 5));
 	}
 
 	

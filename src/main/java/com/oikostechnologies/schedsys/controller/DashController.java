@@ -57,6 +57,8 @@ public class DashController {
 	
 	@GetMapping("/dashboard/personnel")
 	public String personel(Model model) {
+		model.addAttribute("parameter", null);
+		model.addAttribute("currentPage" , 1);
 		model.addAttribute("masteradmins", userservice.findAllUsers());
 		model.addAttribute("totalelement", userservice.findAllUsers().getTotalElements());
 		model.addAttribute("totalpage", userservice.findAllUsers().getTotalPages());;

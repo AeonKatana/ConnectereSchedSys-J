@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.oikostechnologies.schedsys.entity.Company;
 import com.oikostechnologies.schedsys.entity.User;
 import com.oikostechnologies.schedsys.projection.UserDeptDTO;
 
@@ -44,7 +43,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	
 	Page<User> findByFirstnameOrLastnameLike(String firstname, String lastname , Pageable page);
 	
-
+	Page<User> findAllByFirstnameContaining(String firstname ,Pageable page);
 	
 }
 

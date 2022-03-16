@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/simplePagination.css}">
 <title>ConnectereHub</title>
 
 </head>
@@ -177,6 +178,21 @@
 						<h5 class="text-center m-5">No companies found</h5>
 					</div>
 				</div>
+				<nav aria-label="Page navigation example" th:if="${parameter == null}" class="justify-content-end">
+					<ul class="pagination justify-content-end m-3" id="normal">
+						
+					</ul>
+				
+				</nav>
+				<nav aria-label="Page navigation example" th:unless="${parameter == null}" th:pid="${totalpage}">
+					<ul class="pagination justify-content-center " id="abnormal" th:if="${totalpage != 0}">
+						
+					</ul>
+					<ul th:unless="${totalpage != 0}">
+					
+						
+					</ul>
+				</nav>
 			</div>
 
 		</div>
@@ -195,5 +211,31 @@
 		};
 	</script>
 	<script th:src="@{/js/company.js}"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script th:src="@{/js/jquery.simplePagination.js}"></script>
+		<script th:inline="text">
+		
+		
+		
+		$(function() {
+			
+			
+			
+		    $("#normal").pagination({
+		    	pages : "[[${totalpage}]]" , 
+		        hrefTextPrefix: "/personnel/page/",
+		        currentPage : "[[${currentPage}]]",
+		        displayedPages: 3,
+		        edges: 1
+		    });
+		    $("#abnormal").pagination({
+		    	pages : "[[${totalpage}]]" , 
+		        hrefTextPrefix: "/personnel/page/",
+		        hrefTextSuffix: "/search?search=[[${parameter}]]",
+		        currentPage : "[[${currentPage}]]"
+		    });
+		});
+		
+		</script>
 </body>
 </html>
