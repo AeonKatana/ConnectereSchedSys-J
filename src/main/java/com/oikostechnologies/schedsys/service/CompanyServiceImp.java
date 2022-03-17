@@ -3,8 +3,12 @@ package com.oikostechnologies.schedsys.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.oikostechnologies.schedsys.datatable.repo.CompanyDataTable;
 import com.oikostechnologies.schedsys.entity.Company;
 import com.oikostechnologies.schedsys.entity.User;
 import com.oikostechnologies.schedsys.entity.UserRole;
@@ -29,6 +33,9 @@ public class CompanyServiceImp implements CompanyService {
 	
 	@Autowired
 	private RoleRepo rolerepo;
+	
+	@Autowired
+	private CompanyDataTable companytable;
 	
 	@Override
 	public long companycount() {
@@ -71,7 +78,17 @@ public class CompanyServiceImp implements CompanyService {
 
 	@Override
 	public Page<Company> searchCompany(String search) {
-		return companyrepo.findByCompnameLike(search, PageRequest.of(0, 5));
+		return companyrepo.findByCompnameContaining(search, PageRequest.of(0, 5));
+	}
+
+	@Override
+	public DataTablesOutput<Company> findAll(DataTablesInput input) {
+		return companytable.findAll(input);
+	}
+
+	@Override
+	public DataTablesOutput<Company> findAll(DataTablesInput input, Specification<Company> spec) {
+		return companytable.findAll(input, spec);
 	}
 
 }

@@ -278,7 +278,7 @@ class SchedSysApplicationTests {
 	
 	void getCompany() {
 		
-		for(Company c : comrepo.findByCompnameLike("samplecompany", PageRequest.of(0, 1))) {
+		for(Company c : comrepo.findByCompnameContaining("samplecompany", PageRequest.of(0, 1))) {
 			System.out.println(c.getCompname());
 			System.out.println(c.usercount());
 			System.out.println(c.getUser().stream().filter(x -> x.role().equalsIgnoreCase("MASTERADMIN")).findFirst().get().fullname());

@@ -1,13 +1,22 @@
 package com.oikostechnologies.schedsys.controller;
 
+import java.util.Arrays;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.oikostechnologies.schedsys.entity.User;
 import com.oikostechnologies.schedsys.service.UserService;
 
 @Controller
@@ -17,7 +26,10 @@ public class PersonnelController {
 	@Autowired
 	private UserService userservice;
 	
-	@GetMapping("/search")
+/**	
+ * Manual Pagination and Search functionality
+ *  
+ * @GetMapping("/search")
 	public String searchPersonnel(Model model , @RequestParam("search") String search) {
 		model.addAttribute("parameter", search);
 		model.addAttribute("masteradmins", userservice.searchUser(search));
@@ -46,4 +58,11 @@ public class PersonnelController {
 		
 		return "personnel";
 	}
+**/
+	@GetMapping("/datatable")   // End point for DataTables in JQUERY AJAX
+	@ResponseBody
+	public DataTablesOutput<User> personnelList(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParams){
+		return userservice.findAll(input);
+	}
+	
 }

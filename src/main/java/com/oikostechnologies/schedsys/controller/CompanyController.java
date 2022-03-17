@@ -1,15 +1,22 @@
 package com.oikostechnologies.schedsys.controller;
 
+import java.util.Map;
+
+import javax.persistence.criteria.Expression;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.oikostechnologies.schedsys.entity.Company;
 import com.oikostechnologies.schedsys.model.CompanyModel;
 import com.oikostechnologies.schedsys.model.UserModel;
 import com.oikostechnologies.schedsys.service.CompanyService;
@@ -27,8 +34,10 @@ public class CompanyController {
 		companyService.addCompany(company, user);
 		return true;
 	}
-	
-	@GetMapping("/page/{page}")
+/**	
+ * Manual Search and pagination with spring
+ * 
+	@GetMapping("/page/{page}") 
 	public String companylist(Model model, @PathVariable("page") int page) {
 		model.addAttribute("masteradmincomp", companyService.getCompanies());
 		model.addAttribute("totalelement", companyService.getCompanies().getTotalElements());
@@ -43,6 +52,10 @@ public class CompanyController {
 		model.addAttribute("totalpage", companyService.searchCompany(search).getTotalPages());
 		return "companyprofile";
 	}
-	
-	
+**/
+	@GetMapping("/datatable") // End point for DataTable Jquery Ajax
+	@ResponseBody
+	public DataTablesOutput<Company> companyList(@Valid DataTablesInput input , @RequestParam Map<String, String> queryParam){
+		return companyService.findAll(input);
+	}
 }

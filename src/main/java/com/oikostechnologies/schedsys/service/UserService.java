@@ -1,6 +1,8 @@
 package com.oikostechnologies.schedsys.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
 import com.oikostechnologies.schedsys.entity.User;
 
@@ -12,4 +14,6 @@ public interface UserService {
 	public Page<User> findAllUsers(int page);
 	public Page<User> findAllUsers(int page , String search);
 	public Page<User> searchUser(String search);
+	public DataTablesOutput<User> findAll(DataTablesInput input);
+	
 }

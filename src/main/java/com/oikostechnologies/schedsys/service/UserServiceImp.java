@@ -1,10 +1,15 @@
 package com.oikostechnologies.schedsys.service;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
+import com.oikostechnologies.schedsys.datatable.repo.UserDataTable;
 import com.oikostechnologies.schedsys.entity.User;
 import com.oikostechnologies.schedsys.repo.UserRepo;
 
@@ -13,6 +18,9 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	private UserRepo userrepo;
+	
+	@Autowired
+	private UserDataTable usertablerepo;
 	
 	@Override
 	public long usercount() {
@@ -34,7 +42,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public Page<User> searchUser(String search) {
 		
-		return userrepo.findByFirstnameOrLastnameLike(search, search , PageRequest.of(0, 5));
+		return userrepo.findByFirstnameContainingOrLastnameContaining(search, search , PageRequest.of(0, 5));
 	}
 
 	@Override
@@ -45,6 +53,11 @@ public class UserServiceImp implements UserService {
 	@Override
 	public Page<User> findAllUsers(int page, String search) {
 		return userrepo.findAllByFirstnameContaining(search , PageRequest.of(page, 5));
+	}
+
+	@Override
+	public DataTablesOutput<User> findAll(@Valid DataTablesInput input) {
+		return usertablerepo.findAll(input);
 	}
 
 	

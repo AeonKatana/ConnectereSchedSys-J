@@ -41,7 +41,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	
 	User findByEmail(String email);
 	
-	Page<User> findByFirstnameOrLastnameLike(String firstname, String lastname , Pageable page);
+	Page<User> findByFirstnameContainingOrLastnameContaining(String firstname, String lastname , Pageable page);
 	
 	Page<User> findAllByFirstnameContaining(String firstname ,Pageable page);
 	

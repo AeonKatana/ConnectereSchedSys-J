@@ -15,8 +15,13 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
 	rel="stylesheet">
+
 <link rel="stylesheet" th:href="@{/css/style.css}">
-<link rel="stylesheet" th:href="@{/css/simplePagination.css}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script th:src="@{/js/jquery.spring-friendly.js}"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<link rel='stylesheet' href='https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css'>
 <title>ConnectereHub</title>
 
 </head>
@@ -138,20 +143,14 @@
 			</nav>
 
 			<div class="container-fluid px-3 p-2">
-				<div class="text-end">
-				<form class="float-right" th:action="@{/companies/search}">
-					<input class="search mx-3 text-right p-1" type="text"
-						placeholder=" search company..." name="search" style="font-family: Helvetica;">
-					<input type="submit" value="Search" class="btn btn-outline-primary">
-				</form>
-				</div>
+				
 				<button type="button" class="btn btn-success btn"
 						data-bs-toggle="modal" data-bs-target="#addcompany">Add
 						company</button>
 				<div
 					class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
 					<div class="col" th:if="${totalpage != 0}">
-						<table class="table bg-white rounded shadow-sm  table-hover">
+						<table class="table bg-white rounded shadow-sm  table-hover" id="mytable">
 							<thead>
 								<tr>
 
@@ -163,14 +162,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="comp : ${masteradmincomp}">
-
-									<td th:text="${comp.compname}" th:style="${'color :' + comp.color}">Liam Payne</td>
-									<td th:text="${comp.masteradmin}"></td>
-									<td th:text="${comp.usercount}"></td>
-									<td><button type="button" class="btn btn-primary btn-md ;">View
-											Details</button></td>
-								</tr>
+								
 							</tbody>
 						</table>
 					</div>
@@ -178,28 +170,12 @@
 						<h5 class="text-center m-5">No companies found</h5>
 					</div>
 				</div>
-				<nav aria-label="Page navigation example" th:if="${parameter == null}" class="justify-content-end">
-					<ul class="pagination justify-content-end m-3" id="normal">
-						
-					</ul>
-				
-				</nav>
-				<nav aria-label="Page navigation example" th:unless="${parameter == null}" th:pid="${totalpage}">
-					<ul class="pagination justify-content-center " id="abnormal" th:if="${totalpage != 0}">
-						
-					</ul>
-					<ul th:unless="${totalpage != 0}">
-					
-						
-					</ul>
-				</nav>
 			</div>
 
 		</div>
 
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
@@ -211,31 +187,6 @@
 		};
 	</script>
 	<script th:src="@{/js/company.js}"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-		<script th:src="@{/js/jquery.simplePagination.js}"></script>
-		<script th:inline="text">
 		
-		
-		
-		$(function() {
-			
-			
-			
-		    $("#normal").pagination({
-		    	pages : "[[${totalpage}]]" , 
-		        hrefTextPrefix: "/personnel/page/",
-		        currentPage : "[[${currentPage}]]",
-		        displayedPages: 3,
-		        edges: 1
-		    });
-		    $("#abnormal").pagination({
-		    	pages : "[[${totalpage}]]" , 
-		        hrefTextPrefix: "/personnel/page/",
-		        hrefTextSuffix: "/search?search=[[${parameter}]]",
-		        currentPage : "[[${currentPage}]]"
-		    });
-		});
-		
-		</script>
 </body>
 </html>

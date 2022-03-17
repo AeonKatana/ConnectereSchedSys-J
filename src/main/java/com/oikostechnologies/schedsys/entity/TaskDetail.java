@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,9 +41,11 @@ public class TaskDetail {
 	private boolean done;
 	
 	@OneToMany(mappedBy = "taskdetail")
+	@JsonManagedReference
 	private Set<UserTask> taskdetail;
 	
 	
 	@ManyToOne
+	@JsonBackReference
 	private Task task;
 }

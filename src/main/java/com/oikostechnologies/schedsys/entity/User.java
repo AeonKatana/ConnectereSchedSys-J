@@ -3,6 +3,7 @@ package com.oikostechnologies.schedsys.entity;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,9 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,21 +44,26 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
 	@Fetch(FetchMode.JOIN)
+	@JsonManagedReference
 	private Set<UserRole> userrole;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("user")
 	private Company company;
 
 	
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
 	private Set<UserDepartment> userdepartment;
 	
 	
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
 	private Set<UserTask> tasks;
 	
 	
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
 	private Set<DailyTask> dailies;
 	
 	@Transient

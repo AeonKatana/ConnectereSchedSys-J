@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,12 +33,15 @@ public class Department {
 	private String deptname;
 	
 	@OneToMany(mappedBy = "department")
+	@JsonManagedReference
 	private Set<Task> tasks;
 	
 	@OneToMany(mappedBy = "department")
+	@JsonManagedReference
 	private Set<UserDepartment> userdepartment;
 	
 	@ManyToOne
+	@JsonBackReference
 	private Company company;
 	
 	
