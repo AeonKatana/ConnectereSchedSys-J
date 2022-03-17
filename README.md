@@ -12,14 +12,15 @@ Current Features/Functionality
 * Ability to Search , Sort personnels and companies
 
 Technologies/Tools used:
-* Amazon RDS for MySQL Database
-* Heroku Free Tier Hosting
+* Amazon RDS
+* Heroku
 * Spring Boot
 * Spring Data JPA
 * Spring Security
 * Thymeleaf
 * JQuery
 * DataTables
-* Bootstrap 5
 * Spring DataTables
-* Lombok
+* Bootstrap 5
+* Maven
+* Project Lombok
