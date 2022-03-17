@@ -34,7 +34,7 @@ public class EmailMessage {
 	}
 	
 	public String formattedEmail() {
-		return user + " has invited you to join his company online. Click the link below to accept the invitation" + "/n /n" + message;
+		return user + " has invited you to join his company online. Click the link below to accept the invitation" + "\n \n" + message;
 	}
 	
 }
