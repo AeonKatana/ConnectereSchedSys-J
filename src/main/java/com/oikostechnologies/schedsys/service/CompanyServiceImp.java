@@ -1,23 +1,29 @@
 package com.oikostechnologies.schedsys.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import com.oikostechnologies.schedsys.datatable.repo.CompanyDataTable;
 import com.oikostechnologies.schedsys.entity.Company;
 import com.oikostechnologies.schedsys.entity.User;
 import com.oikostechnologies.schedsys.entity.UserRole;
+import com.oikostechnologies.schedsys.event.CompanyEvent;
 import com.oikostechnologies.schedsys.model.CompanyModel;
 import com.oikostechnologies.schedsys.model.UserModel;
 import com.oikostechnologies.schedsys.repo.CompanyRepo;
 import com.oikostechnologies.schedsys.repo.RoleRepo;
 import com.oikostechnologies.schedsys.repo.UserRepo;
 import com.oikostechnologies.schedsys.repo.UserRoleRepo;
+import com.oikostechnologies.schedsys.security.MyUserDetails;
 
 @Service
 public class CompanyServiceImp implements CompanyService {
@@ -37,6 +43,9 @@ public class CompanyServiceImp implements CompanyService {
 	@Autowired
 	private CompanyDataTable companytable;
 	
+	@Autowired
+	private ApplicationEventPublisher publisher;
+	
 	@Override
 	public long companycount() {
 		return companyrepo.count();
@@ -48,7 +57,7 @@ public class CompanyServiceImp implements CompanyService {
 	}
 
 	@Override
-	public boolean addCompany(CompanyModel company, UserModel user) {
+	public boolean addCompany(@AuthenticationPrincipal MyUserDetails detail,CompanyModel company, UserModel user, HttpServletRequest request) {
 		
 		Company comp = Company.builder()
 						.color(company.getCompanycolor())
@@ -71,9 +80,12 @@ public class CompanyServiceImp implements CompanyService {
 		userrepo.save(master);
 		
 		userrolerepo.save(ur);
-		
-		
+		publisher.publishEvent(new CompanyEvent(detail,master, applicationUrl(request)));
 		return true;
+	}
+
+	private String applicationUrl(HttpServletRequest request) {
+		return "https://" + request.getServerName() + request.getContextPath();
 	}
 
 	@Override

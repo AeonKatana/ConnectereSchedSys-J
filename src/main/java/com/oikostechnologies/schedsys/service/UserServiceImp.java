@@ -10,7 +10,9 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import com.oikostechnologies.schedsys.datatable.repo.UserDataTable;
+import com.oikostechnologies.schedsys.entity.RegistrationToken;
 import com.oikostechnologies.schedsys.entity.User;
+import com.oikostechnologies.schedsys.repo.RegistrationTokenRepo;
 import com.oikostechnologies.schedsys.repo.UserRepo;
 
 @Service
@@ -21,6 +23,9 @@ public class UserServiceImp implements UserService {
 	
 	@Autowired
 	private UserDataTable usertablerepo;
+	
+	@Autowired
+	private RegistrationTokenRepo tokenrepo;
 	
 	@Override
 	public long usercount() {
@@ -58,6 +63,16 @@ public class UserServiceImp implements UserService {
 	@Override
 	public DataTablesOutput<User> findAll(@Valid DataTablesInput input) {
 		return usertablerepo.findAll(input);
+	}
+
+	@Override
+	public void saveRegistrationToken(User user, String token) {
+		
+		RegistrationToken rtoken = new RegistrationToken();
+		rtoken.setToken(token);
+		rtoken.setUser(user);
+		tokenrepo.save(rtoken);
+		
 	}
 
 	

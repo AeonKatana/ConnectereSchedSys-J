@@ -13,7 +13,12 @@
 			    }, {
 			      data : 'firstname',
 			      render : function(data, type ,row){
-			    	  return row.firstname + ' ' +row.lastname;
+					  if(row.enabled){
+						 return  row.firstname + ' ' +row.lastname;
+					  }
+					  else
+					  	return "<p style='opacity : 0.3'>" + row.firstname + ' ' + row.lastname + "</p>";
+			    	 
 			      }
 			    },{
 			    	data : "company.compname",
@@ -27,13 +32,22 @@
 			    	}
 			    },{
 			    	data : "userrole",
-			    	render : function(data){
+			    	render : function(data, type ,row){
+						if(row.enabled)
 			    		return data[0].role.rolename;
+			    		else{
+							return "<p style='opacity : 0.3'>" + data[0].role.rolename + "</p>";
+						}
 			    	}
 			    },{
 			    	data : 'id',
-			    	render : function(data){
+			    	render : function(data, type, row){
+						if(row.enabled)
 			    		return "<button class='btn btn-primary'> View Details </button>";
+			    		else{
+						return "<button class='btn btn-primary' disabled> View Details </button>";
+						}
+			    		
 			    	}
 			    },{
 					data : 'lastname',

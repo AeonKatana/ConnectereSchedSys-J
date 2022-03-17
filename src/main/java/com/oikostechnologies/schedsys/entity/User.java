@@ -9,11 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -65,6 +67,10 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	@JsonManagedReference
 	private Set<DailyTask> dailies;
+	
+	@OneToOne(mappedBy = "user")
+	@JsonIgnore
+	private RegistrationToken token;
 	
 	@Transient
 	public String role() {

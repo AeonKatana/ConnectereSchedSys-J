@@ -15,5 +15,6 @@ public interface UserService {
 	public Page<User> findAllUsers(int page , String search);
 	public Page<User> searchUser(String search);
 	public DataTablesOutput<User> findAll(DataTablesInput input);
+	public void saveRegistrationToken(User user , String token);
 	
 }
