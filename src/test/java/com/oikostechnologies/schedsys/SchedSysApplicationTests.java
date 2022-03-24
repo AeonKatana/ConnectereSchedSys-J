@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,7 +36,9 @@ import com.oikostechnologies.schedsys.repo.UserDepartmentRepo;
 import com.oikostechnologies.schedsys.repo.UserRepo;
 import com.oikostechnologies.schedsys.repo.UserRoleRepo;
 import com.oikostechnologies.schedsys.repo.UserTaskRepo;
+import com.oikostechnologies.schedsys.security.MyUserDetails;
 import com.oikostechnologies.schedsys.service.DailyTaskService;
+import com.oikostechnologies.schedsys.service.UserService;
 
 @SpringBootTest
 class SchedSysApplicationTests {
@@ -68,6 +72,9 @@ class SchedSysApplicationTests {
 	
 	@Autowired
 	private QuickViewRepo qrepo;
+	
+	@Autowired
+	private UserService userservice;
 	
 	@Autowired
 	private DailyTaskService dailyservice;
@@ -285,5 +292,30 @@ class SchedSysApplicationTests {
 		}
 		
 	}
+
+	void findByEmail() {
+		User user = userrepo.findByEmail("rean@gmail.com");
+		System.out.println(user.fullname());
+	}
+
+	void findPersonnelByCompanyName(){
+		User myuser = userrepo.findByEmail("alibaba@gmail.com");
+		MyUserDetails user = new MyUserDetails(myuser);
+		System.out.println("Company Name : " + myuser.companyname());
+		List<User> users = userservice.getAllByCompany(user);
+		List<User> users2 = userrepo.getAllByCompanyname("Alibaba");
+		System.out.println("Size : " + users.size());
+		System.out.println("Size : " + users2.size());
+	}
 	
+	void getAllUsers() {
+		for(User u : userrepo.findAll(PageRequest.of(0, 10))) {
+			System.out.println(u.role());
+		}
+	}
+	@Test
+	void deleteUser() {
+		 User user = userrepo.findById(10L).orElse(null);
+		 userrepo.delete(user);
+	}
 }

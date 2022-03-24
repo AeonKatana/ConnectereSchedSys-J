@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<title>ConnectereHub</title>
+<title>EXELR8</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,9 +39,9 @@
 				<form class="login100-form validate-form" method="post"
 					th:action="@{/perform-login}" autocomplete="off">
 					
-					<span class="login100-form-title p-b-43" style="font-family: Lato">
+					<span class="login100-form-title p-b-10" style="font-family: Lato">
 						Welcome to <br>
-					<span class="CHN" style="font-family: Anton, sans serif">ConnectereHub</span>
+					<span class="CHN" style="font-family: Anton, sans serif">EXELR8</span>
 					</span>
 
 					<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error}">
@@ -71,7 +71,7 @@
 						</div>
 
 						<div>
-							<a href="#" class="txt1"> Forgot Password? </a>
+							<a th:href="@{/forgot-pass}" class="txt1"> Forgot Password? </a>
 						</div>
 					</div>
 

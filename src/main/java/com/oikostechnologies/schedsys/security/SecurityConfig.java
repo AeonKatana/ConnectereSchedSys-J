@@ -49,8 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.headers().frameOptions().sameOrigin()
 			.and()
 			.authorizeRequests()
-			.antMatchers("/resources/**").permitAll()
-			.antMatchers("/","/dashboard/**","/task/mytask/**", "/task/assignedtask/**", "/task/savemytask","/personnel/**","/companies/**").authenticated()
+			.antMatchers("/resources/**","/forgot-pass/**", "/resetPass").permitAll()
+			.antMatchers("/","/dashboard/**","/task/mytask/**", "/task/assignedtask/**", 
+					     "/task/savemytask","/personnel/**","/companies/**", "/personnel/mycompanypeople"
+					     ,"/personnel/savecard").authenticated()
 			.and()
 			.formLogin().loginPage("/login-page").usernameParameter("email").passwordParameter("pass")
 			.loginProcessingUrl("/perform-login")

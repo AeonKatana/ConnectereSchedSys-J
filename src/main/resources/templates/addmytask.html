@@ -11,6 +11,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.mentionsInput.css}">
+    
     <title>ConnectereHub</title>
 
 </head>
@@ -22,32 +24,45 @@
 <form class="frm" id="addform">
 	
     <div class="inside">
-    <input type="text" class="form-control" id="title" placeholder="Task title" required>
-        <input type="text" class="form-control" id="detail" placeholder="Describe Task" required>  
+    <input type="text" class="form-control" id="title" placeholder="Task title" required>  
         <br>
- <div class="form-group">
-   	<label>Recurring : </label>
-    		<input type="radio" id="radio1" class="form-check-input" name="variation" value="true">
-    		<label class="form-check-label"  for="radio1" >Yes</label>
-			<input type="radio" id="radio2" class="form-check-input" name="variation" checked="checked" value="false">
-			<label class="form-check-label" for="radio2">No</label>
-    </div>
-    <div class="form-group row">
-        <label for="" class="col-sm-1 col-form-label">Until</label>
+  <div class="form-group row">
+        <label for="" class="col-sm-2 col-form-label">Verb</label>
         <div class="grp col-sm-10">
-        <input type="date" class="form-control" name="date" placeholder="Select Date" id="date" disabled required>
+        <input type="text" class="form-control" id="verb" placeholder="What will you do?" required>
         </div>
     </div>
-   
-    <div class="form-group row">
-        <label for="" class="col-sm-1 col-form-label">Note</label>
+ <div class="form-group row">
+        <label for="" class="col-sm-2 col-form-label">What</label>
         <div class="grp col-sm-10">
-        <input type="text" class="form-control" id="note" placeholder="Add extra details (optional)">
+        <input type="text" class="form-control" id="what" placeholder="Action Target">
+        </div>
+    </div>
+ <div class="form-group row">
+        <label for="" class="col-sm-2 col-form-label">Number</label>
+        <div class="grp col-sm-10">
+        <input type="text" class="form-control" id="number" placeholder="How many times?">
         </div>
     </div>
 
-    <button type="submit" class="addtask"> Add this task</button>
-    <button type="button" class="btncancel" >  Cancel</button>
+    <div class="form-group row">
+        <label for="" class="col-sm-2 col-form-label">Timeline</label>
+        <div class="grp col-sm-10">
+        <input type="date" class="form-control" id="date" placeholder="Until when?" required>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="" class="col-sm-2 col-form-label">Once Done notify:</label>
+        <div class="grp col-sm-10">
+        <textarea class="mention" id="mention" placeholder="Type @ name(s) to notify"></textarea>
+        </div>
+    </div>
+	<div class="justify-content-center text-center border">
+		 <button type="submit" class="addtask text-center"> Add this task</button>
+    	 <button type="button" class="btncancel text-center" >  Cancel</button>
+	</div>
+   
 
 </div>
 </form>
@@ -70,7 +85,16 @@
     };
   
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script th:src="@{/js/jquery.mentionsInput.js}"></script>
+<script th:src="@{/js/jquery.elastic.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.events.input.js}"></script>
 <script th:src="@{/js/task.js}"></script>
+<script>
+
+
+
+</script>
 
 </body>
 </html>

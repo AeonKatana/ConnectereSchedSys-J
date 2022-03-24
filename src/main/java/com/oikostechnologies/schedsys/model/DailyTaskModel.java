@@ -1,5 +1,7 @@
 package com.oikostechnologies.schedsys.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +17,7 @@ public class DailyTaskModel {
 	private String title;
 	private String taskdetail;
 	private String until;
-	private boolean recurring;
 	private String note = "No Notes";
-	
+	private List<PeopleModel> mentions;
 	
 }

@@ -20,12 +20,17 @@ $(document).ready(function(){
 
 			
 	var table = $('#mytable').DataTable({
+				
 				"scrollY":        "380px",
 		        "scrollCollapse": true,
 			    'ajax' : { url : '/companies/datatable' , type : "GET" },
 			    'serverSide' : true,
 			    "pageLength": 5,
 				"lengthChange": false,
+				"columnDefs": [{
+				targets: -1,
+				className: 'dt-right'
+				}],
 			    columns : [{
 			      data : 'compname',
 			      render : function(data, type , row){
@@ -43,7 +48,8 @@ $(document).ready(function(){
 			    },{
 			    	data : 'id',
 			    	render : function(data){
-			    		return "<button class='btn btn-primary'> View Details </button>";
+			    		return "<button class='btn btn-primary'> View Details </button> "+
+			    		" <button class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#companyDNA'>View DNA</button>";
 			    	}
 			    }]
 			  });
@@ -53,5 +59,5 @@ $(document).ready(function(){
 				 
 			 });
 		
-		
+	
 });

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oikostechnologies.schedsys.model.DailyTaskModel;
+import com.oikostechnologies.schedsys.model.PeopleModel;
 import com.oikostechnologies.schedsys.security.MyUserDetails;
 import com.oikostechnologies.schedsys.service.DailyTaskService;
 
@@ -40,6 +41,20 @@ public class TaskController {
 		
 		return task;
 	}
+	
+//	@PostMapping("/mentionTest")
+//	@ResponseBody
+//	public DailyTaskModel mention(@RequestBody DailyTaskModel daily) {
+//		
+//		for(PeopleModel pm : daily.getMentions()) {
+//			System.out.println("ID :" + pm.getId());
+//			System.out.println("Name : " + pm.getName());
+//		}
+//		
+//		return daily;
+//	}
+	
+	
 	
 	
 }

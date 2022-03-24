@@ -13,5 +13,6 @@ public interface DailyTaskService {
 	getMyTasksByUserId(long id);
 	public long countCompleted();
 	public long countDailyToday();
-	
+	public long countCompanyDaily(String company);
+	public long countMyDaily(long id);
 }

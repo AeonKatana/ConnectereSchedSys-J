@@ -45,5 +45,11 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	
 	Page<User> findAllByFirstnameContaining(String firstname ,Pageable page);
 	
+	@Query("Select u from User u join u.company c where c.compname =:compname")
+	List<User> getAllByCompanyname(@Param("compname")String compname);
+	
+	@Query("Select u from User u join u.userrole ur join ur.role r where r.rolename = 'SUPERADMIN'")
+	User findSuperAdmin();
+	
 }
 

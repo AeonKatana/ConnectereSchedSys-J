@@ -2,12 +2,14 @@ package com.oikostechnologies.schedsys.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
@@ -40,12 +42,25 @@ public class Company {
 	@JsonManagedReference
 	private Set<Department> departments;
 	
-	@OneToMany(mappedBy = "company" , fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "company" , fetch = FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.JOIN)
 	@JsonIgnoreProperties("company")
 	private Set<User> user;
 	
+	@OneToOne(mappedBy = "company")
+	private CompanyDna dna;
+	
 	private String color;
+	
+	@Transient
+	public String companycolor() {
+		try {
+			return this.color;
+		}catch(Exception e) {
+			return "black";
+		}
+	}
+	
 	
 	@Transient
 	public int usercount() {

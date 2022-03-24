@@ -17,7 +17,19 @@ $(document).ready(function(){
 	});
 	 
 	
-	
+	// Mention testing
+	$('textarea.mention').mentionsInput({
+	  onDataRequest:function (mode, query, callback) {
+		  $.getJSON('/personnel/people', function(responseData) {
+		        responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+		        callback.call(this, responseData);
+		      });
+	  }
+	});	
+
+$("#shet").click(function(){
+	 
+});
 	
 	
 	// HTTP Requests
@@ -25,13 +37,13 @@ $(document).ready(function(){
 	$("#addform").submit(function(e){
 		e.preventDefault();
 	
+		$('textarea.mention').mentionsInput('getMentions', function(data) {
+		
 		var task = {};
 		task['title'] = $("#title").val();
-		task['taskdetail'] = $("#detail").val();
-		task['recurring'] = $("input[name='variation']:checked").val();
+		task['taskdetail'] = $("#verb").val() + " " + $("#number").val() + " " + $("#what").val();
 		task['until'] = $("#date").val();
-		task['note'] = $("#note").val();
-	
+		task['mentions'] = data;
 		
 		$.ajax({
 			type : "POST",
@@ -44,6 +56,8 @@ $(document).ready(function(){
 				alert("Task Added!");
 			}
 		})
+		
+    });
 		
 	});
 	

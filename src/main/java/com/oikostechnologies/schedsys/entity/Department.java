@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -44,6 +45,17 @@ public class Department {
 	@JsonBackReference
 	private Company company;
 	
-	
-	
+	@Transient
+	public String companyname() { 
+		try {
+			return company.getCompname();
+		}catch(Exception e) {
+			return "Non-Affiliated";
+		}
+	}
+	@Transient
+	public long usercount()
+	{
+		return userdepartment.size();
+	}
 }

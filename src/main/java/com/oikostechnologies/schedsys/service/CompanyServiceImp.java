@@ -1,5 +1,9 @@
 package com.oikostechnologies.schedsys.service;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +17,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import com.oikostechnologies.schedsys.datatable.repo.CompanyDataTable;
+import com.oikostechnologies.schedsys.entity.ActivityLog;
 import com.oikostechnologies.schedsys.entity.Company;
 import com.oikostechnologies.schedsys.entity.User;
 import com.oikostechnologies.schedsys.entity.UserRole;
 import com.oikostechnologies.schedsys.event.CompanyEvent;
 import com.oikostechnologies.schedsys.model.CompanyModel;
 import com.oikostechnologies.schedsys.model.UserModel;
+import com.oikostechnologies.schedsys.repo.ActlogRepo;
 import com.oikostechnologies.schedsys.repo.CompanyRepo;
 import com.oikostechnologies.schedsys.repo.RoleRepo;
 import com.oikostechnologies.schedsys.repo.UserRepo;
@@ -45,6 +51,9 @@ public class CompanyServiceImp implements CompanyService {
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
+	
+	@Autowired
+	private ActlogRepo actrepo;
 	
 	@Override
 	public long companycount() {
@@ -76,11 +85,33 @@ public class CompanyServiceImp implements CompanyService {
 						.user(master)
 						.build();
 		
+		
+		
 		companyrepo.save(comp);
 		userrepo.save(master);
 		
 		userrolerepo.save(ur);
 		publisher.publishEvent(new CompanyEvent(detail,master, applicationUrl(request)));
+		
+		ActivityLog compcreate = new ActivityLog();
+		compcreate.setAction("has created a company");
+		compcreate.setTarget(comp.getCompname());
+		compcreate.setTargetlink("#");
+		compcreate.setUser(detail.getUser());
+		compcreate.setDate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDateTime());
+		
+		
+		ActivityLog createuser = new ActivityLog();
+		createuser.setAction("has created a user");
+		createuser.setTarget(user.getFname() + " " + user.getLname());
+		createuser.setTargetlink("#");
+		createuser.setUser(master);
+		createuser.setDate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDateTime());
+		
+		actrepo.save(compcreate);
+		actrepo.save(createuser);
+		
+		
 		return true;
 	}
 

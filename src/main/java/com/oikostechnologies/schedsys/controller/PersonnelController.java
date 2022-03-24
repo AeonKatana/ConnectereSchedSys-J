@@ -1,6 +1,8 @@
 package com.oikostechnologies.schedsys.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -8,15 +10,17 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oikostechnologies.schedsys.entity.User;
+import com.oikostechnologies.schedsys.model.PeopleModel;
+import com.oikostechnologies.schedsys.security.MyUserDetails;
 import com.oikostechnologies.schedsys.service.UserService;
 
 @Controller
@@ -63,6 +67,43 @@ public class PersonnelController {
 	@ResponseBody
 	public DataTablesOutput<User> personnelList(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParams){
 		return userservice.findAll(input);
+	}
+	
+	@GetMapping("/mycompanypeople")
+	@ResponseBody
+	public List<User> personnelList(@AuthenticationPrincipal MyUserDetails userdetail){
+		System.out.println(userdetail.getFullname());
+		for(User u : userservice.getAllByCompany(userdetail)){
+			System.out.println("Name :" + u.getFirstname());
+		}
+		return userservice.getAllByCompany(userdetail);
+	}
+	
+	@GetMapping("/people")
+	@ResponseBody
+	public List<PeopleModel> getMention(@AuthenticationPrincipal MyUserDetails userdetail){
+		List<PeopleModel> mention = new ArrayList<>();
+		if(userdetail.getUser().role().equalsIgnoreCase("SUPERADMIN")) {
+			for(User u : userservice.findAllUsers()) {
+				mention.add(new PeopleModel(u.getId(),u.fullname(),"people"));
+			}
+		}
+		
+		else {
+		for(User u : userservice.getAllByCompany(userdetail)) {
+			mention.add(new PeopleModel(u.getId(),u.fullname(),"people"));
+		}
+		}
+		return mention;
+	}
+	
+	@PostMapping("/savecard") // Just a demo how to handle forbidden actions 
+	@ResponseBody
+	public String saveCard(@AuthenticationPrincipal MyUserDetails detail) {
+		if(!detail.getUser().role().equalsIgnoreCase("MASTERADMIN") && !detail.getUser().role().equalsIgnoreCase("SUPERADMIN")) {
+			return "You're not powerful enough to use this. Please consult your boss";
+		}
+		return "Scorecard Added!";
 	}
 	
 }

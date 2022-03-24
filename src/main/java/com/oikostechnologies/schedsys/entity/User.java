@@ -2,6 +2,7 @@ package com.oikostechnologies.schedsys.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -44,33 +45,44 @@ public class User {
 	private long contactno;
 	
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@Fetch(FetchMode.JOIN)
+	@JsonManagedReference
+	private Set<ActivityLog> actlog;
+	
+	
+	@OneToMany(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	@Fetch(FetchMode.JOIN)
 	@JsonManagedReference
 	private Set<UserRole> userrole;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	@JsonIgnoreProperties("user")
 	private Company company;
 
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	@JsonManagedReference
 	private Set<UserDepartment> userdepartment;
 	
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user" , fetch =  FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	@JsonManagedReference
 	private Set<UserTask> tasks;
 	
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user" , fetch=FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	@JsonManagedReference
 	private Set<DailyTask> dailies;
 	
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
 	@JsonIgnore
 	private RegistrationToken token;
+	
+	@OneToOne(mappedBy ="user" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
+	@JsonIgnore
+	private PasswordToken passtoken;
 	
 	@Transient
 	public String role() {
