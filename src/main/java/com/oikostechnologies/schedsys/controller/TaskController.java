@@ -1,5 +1,9 @@
 package com.oikostechnologies.schedsys.controller;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +69,7 @@ public class TaskController {
 	public String searchTask(@AuthenticationPrincipal MyUserDetails user,@RequestParam("search") String search, Model model) {
 		model.addAttribute("currentUser", user.getUser().getId());
 		model.addAttribute("mytask", dailyservice.searchTask(search));
+		model.addAttribute("currentDate", ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDate());
 		return "task";
 	}
 	
