@@ -19,6 +19,7 @@ $(document).ready(function(){
 	
 	// Mention testing
 	$('textarea.mention').mentionsInput({
+	  minChars : 1,
 	  onDataRequest:function (mode, query, callback) {
 		  $.getJSON('/personnel/people', function(responseData) {
 		        responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
@@ -26,6 +27,16 @@ $(document).ready(function(){
 		      });
 	  }
 	});	
+	
+	$('textarea#who').mentionsInput({
+		 minChars : 1,
+	  onDataRequest:function (mode, query, callback) {
+		  $.getJSON('/personnel/people', function(responseData) {
+		        responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+		        callback.call(this, responseData);
+		      });
+	  }
+	})
 
 $("#shet").click(function(){
 	 
@@ -36,10 +47,14 @@ $("#shet").click(function(){
 	
 	$("#addform").submit(function(e){
 		e.preventDefault();
+		var task = {};
+		$('textarea#who').mentionsInput('getMentions', function(data){
+			task['who'] = data;
+		});
 	
 		$('textarea.mention').mentionsInput('getMentions', function(data) {
 		
-		var task = {};
+		
 		task['title'] = $("#title").val();
 		task['taskdetail'] = $("#verb").val() + " " + $("#number").val() + " " + $("#what").val();
 		task['until'] = $("#date").val();
@@ -60,6 +75,7 @@ $("#shet").click(function(){
     });
 		
 	});
+	
 	
 	
 });

@@ -8,7 +8,7 @@ $(document).ready(function(){
 		$.post($(this).attr("action"), $(this).serialize(), function(result){
 			$(".spins").css("display", "none");
 		    $("#sendmessage").text("Email Sent!");
-		    $("#alert").text(result).addClass("text-danger");
+		    $("#alert").text(result).addClass("text-warning");
 		});
 		return false;
 	});

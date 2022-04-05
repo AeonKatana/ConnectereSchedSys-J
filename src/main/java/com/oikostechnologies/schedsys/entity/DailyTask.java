@@ -3,6 +3,7 @@ package com.oikostechnologies.schedsys.entity;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,7 +44,7 @@ public class DailyTask {
 	private boolean recurring;
 	private boolean done;
 	
-	@OneToMany(mappedBy = "daily")
+	@OneToMany(mappedBy = "daily", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.JOIN)
 	@JsonManagedReference
 	private Set<NotifyUser> notifyusers;  

@@ -19,5 +19,5 @@ public class DailyTaskModel {
 	private String until;
 	private String note = "No Notes";
 	private List<PeopleModel> mentions;
-	
+	private List<PeopleModel> who;
 }

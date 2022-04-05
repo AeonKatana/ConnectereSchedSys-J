@@ -67,7 +67,7 @@ public class DashController {
 		model.addAttribute("dailies", dailyservice.countDailyToday());
 		model.addAttribute("dailycomp", dailyservice.countCompanyDaily(userdetail.getUser().companyname()));
 		model.addAttribute("mydaily", dailyservice.countMyDaily(userdetail.getUser().getId()));
-		
+		model.addAttribute("overduecount", dailyservice.countOverdue());
 		
 		System.out.println(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDateTime());
 		
@@ -123,8 +123,9 @@ public class DashController {
 	
 	@GetMapping("/dashboard/task/mytask")
 	public String task(Model model, @AuthenticationPrincipal MyUserDetails userdetails) {
-		model.addAttribute("mytask", dailyservice.getMyTasksByUserId(userdetails.getUser().getId()));
-		
+		model.addAttribute("currentUser", userdetails.getUser().getId());
+		model.addAttribute("mytask", dailyservice.getAllTask());
+		model.addAttribute("currentDate", ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDate());
 		return "task";
 	}
 	

@@ -84,51 +84,60 @@
 
                 <div class="pt-2 bg-white d-flex justify-content-around align-items-center rounded">
 
-				<div class="d-flex">
-                    <a class="atask" th:href="@{/dashboard/task/mytask}">
+				<div class="">
+                    <a class="atask text-center" th:href="@{/dashboard/task/mytask}">
                         <div class="btn-wrap">
-                            <button type="button" class="btnmytask"> My Task</button>
+                            <button type="button" class="btnmytask">Tasks</button>
                         </div>
                     </a>
-                     &nbsp;&nbsp;
-                    <a class="atask" th:href="@{/dashboard/task/assignedtask}">
-                        <div class="btn-wrap">
-                            <button type="button" class="btntask">Personnel's Task</button>
-                        </div>
-                    </a>
-				</div>
-
+                    <div class="m-0">
+                    	<form class="d-flex text-center border" th:action="@{/task/searchtask}">
+                    	<input placeholder="Task, Name, Description, Comp" name="search" type="text" class=" form-control text-center">
+                    	<input type="submit" value="Search" class="btn btn-outline-success">
+                    </form>
+                    </div>
+                    
+                    
+				</div>	
+				
 
                 </div>	
 
 
-                <div class="px-3 border my-3 mx-5" style="height: 450px;overflow: auto;">
+                <div class="px-3 my-2 mx-5" style="height: 450px;overflow: auto;">
 
 					<div class="text-center w-100">                   
-                        <button type="button" id="framebtn" class="btnadd border m-3"><i class="fa fa-plus-circle" style="color: #009d63"></i> Add Task</button>
+                        <button type="button" id="framebtn" class="btnadd border m-2"><i class="fa fa-plus-circle" style="color: #009d63"></i> Add Task</button>
               		</div>
-                    <div class="p-0" id="sample" style="height: auto;">
-                        <iframe id="myframe" name="iframe_a" height="380px" width="85%" title="Iframe Example" class="justify-content-center" style="display: none;margin-left: auto;margin-right:auto;"></iframe>
+                    <div class="p-0 mb-5" id="sample" style="height: auto;">
+                        <iframe id="myframe" name="iframe_a" height="380px" width="75%" title="Iframe Example" class="justify-content-center" style="display: none;margin-left: auto;margin-right:auto;"></iframe>
                     </div>
 					
 				<div id="tasks" class="d-flex flex-wrap justify-content-center"  style="display : none;">
-					<div class=""  th:each="task : ${mytask}">
-						<div class="card" style="width: 25rem;height:200px;">
-							<span>
-								<i class="fa-solid fa-ellipsis text-end p-2" style="float: right"></i>
+					<div class="m-2"   th:each="task : ${mytask}" th:if="${#lists.size(mytask) > 0}">
+						<div class="card  shadow-lg" th:classappend="${currentDate > task.until ? 'bg-danger text-light' : ''}" style="width: 21rem;height:200px;border-radius:20px;">
+							<span class=" text-end">
+								<button class="btn btn-success btn-sm donebtn" th:classappend="${task.user.id != currentUser ? 'disabled' : ''}" th:id="${'done' + task.id}" th:tid="${task.id}"><i class="fa-solid fa-check"></i></button>
+								<button class="btn btn-warning btn-sm" th:classappend="${task.user.id != currentUser ? 'disabled' : ''}"><i class="fa-solid fa-pen-to-square"></i></button>
+								<button class="btn btn-danger btn-sm deletebtn" th:classappend="${task.user.id != currentUser ? 'disabled' : ''}" th:id="${'delete' + task.id}" th:tid="${task.id}"><i class="fa-solid fa-xmark"></i></button>
 							</span>
-							<div class="card-body m-0">
-							<h4 class="card-text" th:text="${'Title : ' + task.title}">Title Task</h4>
-							<input type="checkbox" id="done" th:cecked="${task.done}">
-							<label for="done" th:text="${task.description}">This is where the task description will be</label>
-							<br>
-							To be notified : 
+							<div class="card-body ">
+							<h4 class="card-text text-center mx-1 mb-2" th:text="${task.title}">Title Task</h4>
+							<span class="m-1">Owner :</span><span class="badge" th:style="${'background-color:' + task.user.companycolor}" th:text="${task.user.fullname}"></span>
+							<p th:text="${'Task :' +task.description}" class="m-1 text-left">This is where the task description will be</p>
+							<p class="card-text m-1">Timeline : <i class="fa-regular fa-calendar text-primary"></i> [[${#temporals.monthNameShort(task.starteddate) + ' ' + #temporals.day(task.starteddate) + ' - ' + #temporals.monthNameShort(task.until) + ' ' + #temporals.day(task.until)}]]</p>
+							<span class="m-1">Notify :</span>
 							<th:block th:each="mention : ${task.notifyusers}">
-								<span class="badge bg-info text-dark" th:text="${mention.username}"></span>
+								<span class="badge bg-info text-dark  mx-1" th:text="${mention.username}"></span>
 							</th:block>
-							<p class="card-text "><i class="fa-regular fa-calendar text-primary"></i><b id="mydate" class="m-2" th:text="${#temporals.monthName(task.starteddate) + ' ' + #temporals.day(task.starteddate)}">Mar 26 - 30</b></p>
 							</div>
+							
 						</div>
+						
+					</div>
+					<div th:unless="${#lists.size(mytask) > 0}">
+					
+						<h5 class="text-muted">No Tasks</h5>
 						
 					</div>
 				</div>
@@ -169,6 +178,45 @@
 				
 				$("#myframe").prop("height", 400);
 			});
+			$(".donebtn").click(function(){
+				
+				let taskid = $(this).attr("tid");
+				
+				$.ajax({
+					type : "POST",
+					url : "/task/markasdone",
+					data : {
+						status : true,
+						id : taskid
+					},
+					success : function(result){
+						console.log(result);
+						$("#done" + taskid).parent().parent().fadeOut();
+					}
+				});
+				
+			});
+			
+			$(".deletebtn").click(function(){
+				
+				let taskid = $(this).attr("tid");
+				
+				$.ajax({
+					type : "DELETE",
+					url : "/task/deleteTask",
+					data : {
+						id : taskid
+					},
+					success : function(result){
+						console.log(result);
+						$("#delete" + taskid).parent().parent().fadeOut();
+					}
+				});
+				
+				
+			});
+			
+			
 		});
 	
 	</script>

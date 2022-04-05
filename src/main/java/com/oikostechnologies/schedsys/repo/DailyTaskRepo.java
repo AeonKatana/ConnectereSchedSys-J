@@ -12,7 +12,9 @@ import com.oikostechnologies.schedsys.entity.User;
 
 public interface DailyTaskRepo extends JpaRepository<DailyTask, Long> {
 
-	List<DailyTask> findAllByUserOrderByStarteddateDesc(User user);
+	List<DailyTask> findAllByUserAndDoneFalseOrderByStarteddateDesc(User user);
+	
+	List<DailyTask> findAllByDoneFalseOrderByStarteddateDesc();
 	
 	@Query("SELECT count(*) from DailyTask dt where dt.starteddate = :today")
 	long countDailyToday(@Param("today") LocalDate today);
@@ -22,5 +24,12 @@ public interface DailyTaskRepo extends JpaRepository<DailyTask, Long> {
 	
 	@Query("SELECT count(*) from DailyTask dt join dt.user u where dt.starteddate = :today and u.id =:id")
 	long countDailyToday(@Param("today") LocalDate today, @Param("id") long id);
+	
+	@Query("SELECT count(*) from DailyTask dt where dt.until < :today and dt.done = false")
+	long countOverdue(@Param("today") LocalDate today);
+	
+	@Query("SELECT dt from DailyTask dt join dt.user u left join u.company c where (u.firstname like %:search% OR u.lastname like %:search% OR dt.title like %:search% OR"
+			+ " dt.description like %:search% OR c.compname like %:search%) and dt.done = false order by dt.title asc")
+	List<DailyTask> searchTask(@Param("search") String search);
 	
 }

@@ -1,5 +1,6 @@
 package com.oikostechnologies.schedsys.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.oikostechnologies.schedsys.entity.DailyTask;
@@ -15,4 +16,9 @@ public interface DailyTaskService {
 	public long countDailyToday();
 	public long countCompanyDaily(String company);
 	public long countMyDaily(long id);
+	public long countOverdue();
+	public String markAsDone(User user,boolean status, long id);
+	public String deleteTask(User user, long taskid);
+	public List<DailyTask> getAllTask();
+	public List<DailyTask> searchTask(String search);
 }

@@ -1,17 +1,20 @@
 package com.oikostechnologies.schedsys.controller;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oikostechnologies.schedsys.model.DailyTaskModel;
-import com.oikostechnologies.schedsys.model.PeopleModel;
 import com.oikostechnologies.schedsys.security.MyUserDetails;
 import com.oikostechnologies.schedsys.service.DailyTaskService;
 
@@ -41,6 +44,30 @@ public class TaskController {
 		
 		return task;
 	}
+	
+	@PostMapping("/markasdone")
+	@ResponseBody
+	public String markAsDone(@AuthenticationPrincipal MyUserDetails user,@RequestParam("status") boolean status, @RequestParam("id") long taskid) {
+		return dailyservice.markAsDone(user.getUser(), status, taskid);
+	}
+	
+	@Transactional
+	@DeleteMapping("/deleteTask")
+	@ResponseBody
+	public String deleteTask(@AuthenticationPrincipal MyUserDetails user, @RequestParam("id") long taskid) {
+		
+		
+		return dailyservice.deleteTask(user.getUser(), taskid);
+		
+	}
+	
+	@GetMapping("/searchtask")
+	public String searchTask(@AuthenticationPrincipal MyUserDetails user,@RequestParam("search") String search, Model model) {
+		model.addAttribute("currentUser", user.getUser().getId());
+		model.addAttribute("mytask", dailyservice.searchTask(search));
+		return "task";
+	}
+	
 	
 //	@PostMapping("/mentionTest")
 //	@ResponseBody

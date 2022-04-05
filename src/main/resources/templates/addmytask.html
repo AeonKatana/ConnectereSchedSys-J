@@ -27,6 +27,13 @@
     <input type="text" class="form-control" id="title" placeholder="Task title" required>  
         <br>
   <div class="form-group row">
+        <label for="" class="col-sm-2 col-form-label">For Who?</label>
+        <div class="grp col-sm-10">
+        <textarea id="who" placeholder="Type @ to mention(Leave empty if you will assign it to yourself)">
+        </textarea>
+        </div>
+    </div>
+  <div class="form-group row">
         <label for="" class="col-sm-2 col-form-label">Verb</label>
         <div class="grp col-sm-10">
         <input type="text" class="form-control" id="verb" placeholder="What will you do?" required>
@@ -41,12 +48,12 @@
  <div class="form-group row">
         <label for="" class="col-sm-2 col-form-label">Number</label>
         <div class="grp col-sm-10">
-        <input type="text" class="form-control" id="number" placeholder="How many times?">
+        <input type="number" class="form-control" id="number" placeholder="How many times?">
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="" class="col-sm-2 col-form-label">Timeline</label>
+        <label for="" class="col-sm-2 col-form-label">Deadline</label>
         <div class="grp col-sm-10">
         <input type="date" class="form-control" id="date" placeholder="Until when?" required>
         </div>
@@ -58,7 +65,7 @@
         <textarea class="mention" id="mention" placeholder="Type @ name(s) to notify"></textarea>
         </div>
     </div>
-	<div class="justify-content-center text-center border">
+	<div class="justify-content-center text-center">
 		 <button type="submit" class="addtask text-center"> Add this task</button>
     	 <button type="button" class="btncancel text-center" >  Cancel</button>
 	</div>
