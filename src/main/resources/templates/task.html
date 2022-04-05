@@ -127,9 +127,11 @@
 							<p th:text="${'Task :' +task.description}" class="m-1 text-left">This is where the task description will be</p>
 							<p class="card-text m-1">Timeline : <i class="fa-regular fa-calendar text-primary"></i> [[${#temporals.monthNameShort(task.starteddate) + ' ' + #temporals.day(task.starteddate) + ' - ' + #temporals.monthNameShort(task.until) + ' ' + #temporals.day(task.until)}]]</p>
 							<span class="m-1">Notify :</span>
-							<th:block th:each="mention : ${task.notifyusers}">
+							<th:block th:each="mention,num : ${task.notifyusers}" th:if="${num.index} < 2 ">
 								<span class="badge bg-info text-dark  mx-1" th:text="${mention.username}"></span>
+								<span th:if="${num.index} == 2" th:text="${'+' + (#lists.size(task.notifyusers) - (num.index + 1))}" class="badge bg-info text-light"></span>
 							</th:block>
+							
 							</div>
 							
 						</div>
