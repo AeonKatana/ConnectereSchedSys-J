@@ -126,6 +126,11 @@ public class UserServiceImp implements UserService {
 		return null;
 	}
 
+	@Override
+	public User findById(long id) {
+		return userrepo.findById(id).orElse(null);
+	}
+
 	
 	
 }

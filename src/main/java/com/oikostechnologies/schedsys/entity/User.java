@@ -19,6 +19,7 @@ import org.hibernate.annotations.FetchMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -84,42 +85,69 @@ public class User {
 	@JsonIgnore
 	private PasswordToken passtoken;
 	
+	@OneToMany(mappedBy = "assignedby" , fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+	private Set<DailyTask> assigned;
+	
 	@Transient
+	private String role;
+	@Transient
+	private String companyname;
+	@Transient
+	private String fullname;
+	@Transient
+	private int companysize;
+	@Transient
+	private String companycolor;
+	
+	@Transient
+	@JsonSerialize
 	public String role() {
-		return userrole.stream().findFirst().get().getRole().getRolename();
+		role = userrole.stream().findFirst().get().getRole().getRolename();
+		return role;
 	}
 	
 	@Transient
+	@JsonSerialize
 	public String companyname() { 
 		try {
-			return company.getCompname();
+			companyname = company.getCompname();
+			return companyname;
 		}catch(Exception e) {
-			return "Does not belong to a company";
+			companyname = "Does not belong to a company";
+			return companyname;
 		}
 	}
 	
 	@Transient
+	@JsonSerialize
 	public String fullname() {
-		return firstname + " " + lastname;
+		fullname = firstname + " " + lastname;
+		return fullname;
 	}
 	
 	@Transient
+	@JsonSerialize
 	public int companysize() {
 		
 		try {
-			return company.usercount();
+			companysize = company.usercount();
+			return companysize;
 		}catch(Exception e) {
-			return 0;
+			return companysize = 0;
 		}
 		
 	}
 	@Transient
+	@JsonSerialize
 	public String companycolor() {
 		try {
-			return company.getColor();
+			return companycolor = company.getColor();
 		}catch(Exception e) {
-			return "black";
+			return companycolor =  "black";
 		}
 	}
+	
+	
 	
 }

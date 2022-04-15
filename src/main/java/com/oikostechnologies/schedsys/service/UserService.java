@@ -25,4 +25,5 @@ public interface UserService {
 	public String findByEmail(String email, HttpServletRequest request);
 	public void savePasswordToken(User user , String token);
 	public List<User> getAllByCompany(MyUserDetails user);
+	public User findById(long id);
 }

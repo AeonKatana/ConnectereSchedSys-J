@@ -106,4 +106,17 @@ public class PersonnelController {
 		return "Scorecard Added!";
 	}
 	
+	@GetMapping("/getDetail")
+	@ResponseBody
+	public User getDetail(@RequestParam("id") long id) {
+		
+		User user = userservice.findById(id);
+		if(user == null) {
+			return null;
+		}
+		
+		return user;
+	}
+	
+	
 }

@@ -1,6 +1,8 @@
 
 $(document).ready(function() {
 
+	
+		$("#viewscore :input").prop("disabled",true); 
 
 
 	var cptable = $("#cptable").DataTable({
@@ -52,10 +54,10 @@ $(document).ready(function() {
 			data: 'id',
 			render: function(data, type, row) {
 				if (row.enabled) {
-					return "<button class='btn btn-primary'> View Details </button> <button class='btn btn-secondary addscorecard' data-bs-toggle='modal' data-bs-target='#addscorecard'>Add Scorecard</button>";
+					return "<button class='btn btn-primary viewercp' data-bs-toggle='modal' data-bs-target='#exampleModalCenter'> View Details </button> <button class='btn btn-secondary addscorecard' data-bs-toggle='modal' data-bs-target='#addscorecard'>View Scorecard</button>";
 				}
 				else {
-					return "<button class='btn btn-primary' disabled> View Details </button> <button class='btn btn-primary' disabled> Add Scorecard </button>";
+					return "<button class='btn btn-primary'  disabled> View Details </button> <button class='btn btn-primary' disabled> View Scorecard </button>";
 				}
 
 			}
@@ -113,10 +115,10 @@ $(document).ready(function() {
 			data: 'id',
 			render: function(data, type, row) {
 				if (row.enabled) {
-					return "<button class='btn btn-primary'> View Details </button> <button class='btn btn-secondary addscorecard' data-bs-toggle='modal' data-bs-target='#addscorecard'>Add Scorecard</button>";
+					return "<button class='btn btn-primary viewermy' data-bs-toggle='modal' data-bs-target='#exampleModalCenter'> View Details </button> <button class='btn btn-secondary addscorecard' data-bs-toggle='modal' data-bs-target='#addscorecard'>View Scorecard</button>";
 				}
 				else {
-					return "<button class='btn btn-primary' disabled> View Details </button> <button class='btn btn-secondary' disabled> Add Scorecard </button>";
+					return "<button class='btn btn-primary' disabled> View Details </button> <button class='btn btn-secondary' disabled> View Scorecard </button>";
 				}
 			}
 		}, {
@@ -126,11 +128,18 @@ $(document).ready(function() {
 	});
 	
 	let id = 0;
+	let ids = 0;
 	
-	$("#mytable tbody").on('click', 'button', function() {
+	$("#mytable tbody").on('click', '.viewermy', function() {
 		var data = table.row($(this).parents('tr')).data();
+		ids = data.id;
+		window.location.href="/profile/" + ids;
+		
+	});
+	$("#cptable tbody").on('click', '.viewercp', function() {
+		var data = cptable.row($(this).parents('tr')).data();
 		id = data.id;
-
+		window.location.href="/profile/" + id;
 	});
 	
 	$("#save").click(function(){

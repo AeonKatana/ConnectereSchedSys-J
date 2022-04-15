@@ -48,6 +48,7 @@ public class DailyTaskServiceImp implements DailyTaskService {
 		task.setStarteddate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDate());
 		task.setDescription(model.getTaskdetail());
 		task.setUser(userrepo.findById(who.getId()).orElse(user));
+		task.setAssignedby(user);
 		dailyrepo.save(task);
 		User sa = userrepo.findSuperAdmin();  // Add Superadmin to be notified on default
 		NotifyUser superadmin = new NotifyUser();
@@ -87,6 +88,7 @@ public class DailyTaskServiceImp implements DailyTaskService {
 		task.setStarteddate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDate());
 		task.setDescription(model.getTaskdetail());
 		task.setUser(user);
+		task.setAssignedby(user);
 		dailyrepo.save(task);
 		User sa = userrepo.findSuperAdmin();  // Add Superadmin to be notified on default
 		NotifyUser superadmin = new NotifyUser();

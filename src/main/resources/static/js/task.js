@@ -66,7 +66,7 @@ $("#shet").click(function(){
 			contentType : "application/json",
 			data : JSON.stringify(task),
 			success: function(result){
-				parent.location.reload();
+				parent.location.href = "/dashboard/task/mytask"
 				$("#addform").parent().parent().remove();	
 				alert("Task Added!");
 			}

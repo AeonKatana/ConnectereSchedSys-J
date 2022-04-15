@@ -282,8 +282,8 @@ tl-item.active .tl-dot:before {
                             <i class="fas fa-user me-2"></i><span sec:authentication="principal.Fullname"></span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
+                            <li><a class="dropdown-item" th:href="@{/profile}">Settings</a></li>
                             <li><a class="dropdown-item" th:href="@{/perform-logout}">Logout</a></li>
                         </ul>
                     </li>
@@ -303,7 +303,7 @@ tl-item.active .tl-dot:before {
 	                        <div class="tl-dot" th:style="${'border-color :' + act.user.company.color}" th:if="${act.user.company != null}"></div>
 	                        <div class="tl-dot" th:style="${'border-color : black' }" th:unless="${act.user.company != null}"></div>
 	                        <div class="tl-content">
-	                            <div class=""><a href="#" style="text-decoration:none;">[[${act.user.fullname}]]</a> from <span class="badge" th:style="${'background-color:' + act.user.companycolor}"> [[${act.user.companyname}]] </span> <span class="" th:classappend="${#strings.contains(act.action,'late') || #strings.contains(act.action,'deleted') ? 'text-danger' : ''}">[[${act.action}]]</span>  <a class="" href="#"><span class="badge" th:style="${'background-color:' + act.user.companycolor}"> [[${act.target}]]</span></a></div>
+	                            <div class=""><a th:href="@{/profile/{id}(id=${act.user.id})}" style="text-decoration:none;">[[${act.user.fullname()}]]</a> from <span class="badge" th:style="${'background-color:' + act.user.companycolor()}"> [[${act.user.companyname()}]] </span> <span class="" th:classappend="${#strings.contains(act.action,'late') || #strings.contains(act.action,'deleted') ? 'text-danger' : ''}">[[${act.action}]]</span>  <a class="" href="#"><span class="badge" th:style="${'background-color:' + act.user.companycolor()}"> [[${act.target}]]</span></a></div>
 	                            <div class="tl-date text-muted mt-1" th:text="${#temporals.monthNameShort(act.date) + ' ' + #temporals.day(act.date) + ' ' + #temporals.year(act.date) }"></div>
 	                        	<div class="tl-date text-muted mt-1" th:text="${(#temporals.hour(act.date) - 12) + ':' + #temporals.minute(act.date) + ' PM'}" th:if="${#temporals.hour(act.date) >= 12}"> </div>
 	                        	<div class="tl-date text-muted mt-1" th:text="${#temporals.hour(act.date) + ':' + #temporals.minute(act.date) + ' AM'}" th:if="${#temporals.hour(act.date) < 12}"> </div>

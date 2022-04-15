@@ -40,7 +40,30 @@ table.dataTable thead {
 
 </head>
 <body>
+	<!-- Button trigger modal -->
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Personnel View</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          
+        </button>
+      </div>
+      <div class="modal-body">
+        	<p id="fullname">Full Name :</p>
+        	<p id="role">Role : </p>
+        	<p id="company">Company :</p>
+        	<p id="">Score Cards : </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<div class="modal fade" id="addpnl" tabindex="-1" aria-labelledby="addcompanyModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -49,7 +72,7 @@ table.dataTable thead {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form>
+            <form >
                 <div class="mb-3">
                   <label for="InputFistName" class="form-label fw-bold">Firstname</label>
                   <input type="text" class="form-control" id="" placeholder="Enter first name">
@@ -88,7 +111,7 @@ table.dataTable thead {
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
+	<form id="viewscore">
       <!-- Modal body -->
       <div class="modal-body">
         <div class="firstpage">
@@ -272,10 +295,10 @@ table.dataTable thead {
 
       <!-- Modal footer -->
       <div class="modal-footer">
-      <button type="button" id="save" class="btn btn-success">Save</button>
+      <button type="button" id="save" class="btn btn-success">Save as PDF</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
-
+	</form>
     </div>
   </div>
 </div>
@@ -342,8 +365,8 @@ table.dataTable thead {
 								sec:authentication="principal.Fullname"></span>
 						</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><a class="dropdown-item" href="#">Profile</a></li>
-								<li><a class="dropdown-item" href="#">Settings</a></li>
+								<li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
+								<li><a class="dropdown-item" th:href="@{/profile}">Settings</a></li>
 								<li><a class="dropdown-item" th:href="@{/perform-logout}">Logout</a></li>
 							</ul></li>
 					</ul>
