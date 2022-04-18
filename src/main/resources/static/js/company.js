@@ -48,14 +48,15 @@ $(document).ready(function(){
 			    },{
 			    	data : 'id',
 			    	render : function(data){
-			    		return "<button class='btn btn-primary'> View Details </button> "+
+			    		return "<button class='btn btn-primary viewcomp'> View Details </button> "+
 			    		" <button class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#companyDNA'>View DNA</button>";
 			    	}
 			    }]
 			  });
-			 $("#mytable tbody").on('click','button',function(){
+			 $("#mytable tbody").on('click','.viewcomp',function(){
 				 var data = table.row($(this).parents('tr')).data();
-				 console.log(data.company);
+				
+				  window.location.href="/companies/" + data.compname;
 				 
 			 });
 		

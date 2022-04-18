@@ -134,4 +134,10 @@ public class CompanyServiceImp implements CompanyService {
 		return companytable.findAll(input, spec);
 	}
 
+	@Override
+	public Company getCompany(String name) {
+		// TODO Auto-generated method stub
+		return companyrepo.findByCompname(name);
+	}
+
 }

@@ -46,7 +46,6 @@ public class DailyTask {
 	private boolean done;
 	
 	@OneToMany(mappedBy = "daily", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Fetch(FetchMode.JOIN)
 	@JsonManagedReference
 	private Set<NotifyUser> notifyusers;  
 	

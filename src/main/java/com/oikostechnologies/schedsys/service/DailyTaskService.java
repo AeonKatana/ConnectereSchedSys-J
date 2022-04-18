@@ -21,4 +21,6 @@ public interface DailyTaskService {
 	public String deleteTask(User user, long taskid);
 	public List<DailyTask> getAllTask();
 	public List<DailyTask> searchTask(String search);
+	public String editTask(long id, DailyTaskModel dailyedit,User user);
+	public DailyTaskModel getTask(long id);
 }

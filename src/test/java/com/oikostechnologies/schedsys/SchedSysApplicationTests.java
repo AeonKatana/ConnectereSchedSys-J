@@ -15,7 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.oikostechnologies.schedsys.entity.Company;
+import com.oikostechnologies.schedsys.entity.DailyTask;
 import com.oikostechnologies.schedsys.entity.Department;
+import com.oikostechnologies.schedsys.entity.NotifyUser;
 import com.oikostechnologies.schedsys.entity.Role;
 import com.oikostechnologies.schedsys.entity.Task;
 import com.oikostechnologies.schedsys.entity.TaskDetail;
@@ -27,7 +29,9 @@ import com.oikostechnologies.schedsys.entity.view.Quickview;
 import com.oikostechnologies.schedsys.model.QuickViewModel;
 import com.oikostechnologies.schedsys.projection.UserDeptDTO;
 import com.oikostechnologies.schedsys.repo.CompanyRepo;
+import com.oikostechnologies.schedsys.repo.DailyTaskRepo;
 import com.oikostechnologies.schedsys.repo.DepartmentRepo;
+import com.oikostechnologies.schedsys.repo.NotifyUserRepo;
 import com.oikostechnologies.schedsys.repo.QuickViewRepo;
 import com.oikostechnologies.schedsys.repo.RoleRepo;
 import com.oikostechnologies.schedsys.repo.TaskDetailRepo;
@@ -74,6 +78,9 @@ class SchedSysApplicationTests {
 	private QuickViewRepo qrepo;
 	
 	@Autowired
+	private DailyTaskRepo dailyrepo;
+	
+	@Autowired
 	private UserService userservice;
 	
 	@Autowired
@@ -81,6 +88,9 @@ class SchedSysApplicationTests {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private NotifyUserRepo notifrepo;
 	
 	void contextLoads() {
 		
@@ -313,9 +323,24 @@ class SchedSysApplicationTests {
 			System.out.println(u.role());
 		}
 	}
-	@Test
+	
 	void deleteUser() {
 		 User user = userrepo.findById(10L).orElse(null);
 		 userrepo.delete(user);
 	}
+	
+	void deleteNotif() {
+		DailyTask task = dailyrepo.findById(42L).orElse(null);
+	}
+	
+	void findByCompanyName() {
+		
+		Company company = comrepo.findByCompname("Special Support Section");
+		System.out.println("Company :" + company.getCompname());
+		System.out.println("Master Admin :" + company.masteradmin());
+		
+	}
+	
+	
+	
 }

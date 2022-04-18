@@ -17,7 +17,7 @@ $(document).ready(function(){
 	});
 	 
 	
-	// Mention testing
+	// For Add Task
 	$('textarea.mention').mentionsInput({
 	  minChars : 1,
 	  onDataRequest:function (mode, query, callback) {
@@ -27,7 +27,7 @@ $(document).ready(function(){
 		      });
 	  }
 	});	
-	
+	//For Add Task
 	$('textarea#who').mentionsInput({
 		 minChars : 1,
 	  onDataRequest:function (mode, query, callback) {
@@ -37,6 +37,27 @@ $(document).ready(function(){
 		      });
 	  }
 	})
+	//For Edit Task
+	$('textarea.mentions').mentionsInput({
+	  minChars : 1,
+	  onDataRequest:function (mode, query, callback) {
+		  $.getJSON('/personnel/people', function(responseData) {
+		        responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+		        callback.call(this, responseData);
+		      });
+	  }
+	});	
+	//For Edit Task
+	$('textarea#whos').mentionsInput({
+		 minChars : 1,
+	  onDataRequest:function (mode, query, callback) {
+		  $.getJSON('/personnel/people', function(responseData) {
+		        responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+		        callback.call(this, responseData);
+		      });
+	  }
+	})
+	
 
 $("#shet").click(function(){
 	 
@@ -73,6 +94,62 @@ $("#shet").click(function(){
 		})
 		
     });
+		
+	});
+	let taskid = 0;
+	
+	$(".editbtn").click(function(){
+		taskid = $(this).attr("tid");
+		
+		$.ajax({
+			type : "GET",
+			url : "/task/getTask/" + taskid,
+			contentType : "application/json",
+			success : function(data){
+				let word = data.taskdetail;
+				alert(word);
+				let verb = word.split(' ')[0];
+				let number = word.split(' ')[1];
+				let what = word.split(' ')[2];
+				$("#titles").val(data.title);
+				$("#verbs").val(verb);
+				$("#numbers").val(number);
+				$("#whats").val(what);
+				$("#dates").val(data.until);
+			}
+		});
+		
+	});
+	
+	
+	$("#edittask").submit(function(e){
+		e.preventDefault();
+		var task = {};
+		$('textarea#whos').mentionsInput('getMentions', function(data){
+			task['who'] = data;
+		});
+	
+		$('textarea.mentions').mentionsInput('getMentions', function(data) {
+		
+		
+		task['title'] = $("#titles").val();
+		task['taskdetail'] = $("#verbs").val() + " " + $("#numbers").val() + " " + $("#whats").val();
+		task['until'] = $("#dates").val();
+		task['mentions'] = data;
+		
+		$.ajax({
+			type : "PUT",
+			url : "/task/edittask/" + taskid,
+			contentType : "application/json",
+			data : JSON.stringify(task),
+			success: function(result){
+				parent.location.href = "/dashboard/task/mytask"
+				alert("Task Updated!");
+			}
+		})
+		
+    });
+		
 		
 	});
 	

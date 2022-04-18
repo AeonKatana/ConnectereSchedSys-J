@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="UTF-8">
@@ -382,7 +383,7 @@ tl-item.active .tl-dot:before {
 									<div class="m-2" th:each="task : ${mytask}"
 										th:if="${#lists.size(mytask) > 0}">
 
-										<div class="card shadow-sm"
+										<div class="card shadow-lg"
 											th:classappend="${currentDate > task.until ? 'bg-danger text-light' : ''}"
 											style="width: 21rem; height: 250px; border-radius: 20px;">
 
@@ -393,7 +394,7 @@ tl-item.active .tl-dot:before {
 													<i class="fa-solid fa-check"></i>
 												</button>
 												<button class="btn btn-warning btn-sm"
-													th:classappend="${task.user.id != currentUser ? 'disabled' : ''}">
+													th:classappend="${currentUser.id != task.assignedby.id ? 'disabled' : ''}">
 													<i class="fa-solid fa-pen-to-square"></i>
 												</button>
 												<button class="btn btn-danger btn-sm deletebtn"

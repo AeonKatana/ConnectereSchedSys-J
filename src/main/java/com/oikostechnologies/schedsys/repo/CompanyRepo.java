@@ -12,4 +12,6 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
 
 	public Page<Company> findByCompnameContaining(String search ,Pageable page);
 	
+	Company findByCompname(String name);
+	
 }

@@ -21,4 +21,5 @@ public interface CompanyService {
 	public Page<Company> searchCompany(String search);
 	public DataTablesOutput<Company> findAll(DataTablesInput input);
 	public DataTablesOutput<Company> findAll(DataTablesInput input ,Specification<Company> spec);
+	public Company getCompany(String name);
 }

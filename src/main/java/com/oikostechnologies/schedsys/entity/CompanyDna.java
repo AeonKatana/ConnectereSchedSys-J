@@ -25,6 +25,7 @@ public class CompanyDna {
 	private String vision;
 	private String mission;
 	private String philosophy;
+	private String corevalue;
 	
 	@OneToOne
 	private Company company;

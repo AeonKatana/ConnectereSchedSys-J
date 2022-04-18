@@ -12,13 +12,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.oikostechnologies.schedsys.entity.DailyTask;
 import com.oikostechnologies.schedsys.model.DailyTaskModel;
+import com.oikostechnologies.schedsys.repo.DailyTaskRepo;
+import com.oikostechnologies.schedsys.repo.NotifyUserRepo;
 import com.oikostechnologies.schedsys.security.MyUserDetails;
 import com.oikostechnologies.schedsys.service.DailyTaskService;
 
@@ -30,6 +35,8 @@ public class TaskController {
 	private DailyTaskService dailyservice;
 	
 	
+	
+	
 	@GetMapping("/mytask/addtask")
 	public String addMyTask(Model model) {
 		return "addmytask";
@@ -39,6 +46,20 @@ public class TaskController {
 	public String addAssignedTask() {
 		return "addpnltask";
 	}
+	
+	
+	@PutMapping("/edittask/{id}")
+	@ResponseBody
+	public String editTask(@PathVariable("id") long id, @RequestBody DailyTaskModel dailyedit, @AuthenticationPrincipal MyUserDetails user) {
+		return dailyservice.editTask(id, dailyedit, user.getUser());
+	}
+	
+	@GetMapping("/getTask/{id}")
+	@ResponseBody
+	public DailyTaskModel getTask(@PathVariable("id") long id) {
+		return dailyservice.getTask(id);
+	}
+	
 	
 	@PostMapping("/savemytask")
 	@ResponseBody

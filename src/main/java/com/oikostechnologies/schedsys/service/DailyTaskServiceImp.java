@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -230,6 +232,110 @@ public class DailyTaskServiceImp implements DailyTaskService {
 	public List<DailyTask> searchTask(String search) {
 		
 		return dailyrepo.searchTask(search);
+	}
+
+
+	@Override
+	@Transactional
+	public String editTask(long id, DailyTaskModel dailyedit, User user) {
+		
+		DailyTask task = dailyrepo.findById(id).orElse(null);
+		if(task == null) {
+			return "An error occured. Please refresh the page";
+		}
+		else {
+
+			
+			
+			ActivityLog edittask = new ActivityLog(); // Create an activity log for this event
+			
+			edittask.setAction("has edited a task");
+			edittask.setTarget(task.getTitle());
+			edittask.setTargetlink("#");
+			edittask.setDate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDateTime());
+			edittask.setUser(user);
+			actrepo.save(edittask);
+			
+			
+			notifrepo.deleteAllByDaily(task); // Delete notif user in this task
+			
+			if(dailyedit.getWho().size() > 0) {
+				for(PeopleModel who : dailyedit.getWho()) {
+					task.setTitle(dailyedit.getTitle());
+					task.setUntil(LocalDate.parse(dailyedit.getUntil()));
+					task.setUser(userrepo.findById(who.getId()).orElse(null));
+					task.setDescription(dailyedit.getTaskdetail());
+				
+					
+					
+				
+				for(PeopleModel pm : dailyedit.getMentions()) { // Get all personnels that was mentioned and save them
+					NotifyUser mention = new NotifyUser();
+						mention.setUserid(pm.getId());
+						mention.setUsername(pm.getName());
+						mention.setDaily(task);
+						notifrepo.save(mention);
+					
+				}
+				User sa = userrepo.findSuperAdmin();
+				NotifyUser superadmin = new NotifyUser();
+				superadmin.setDaily(task);
+				superadmin.setUsername(sa.fullname());
+				superadmin.setUserid(sa.getId());
+				
+				notifrepo.save(superadmin);
+				
+				ActivityLog compcreate = new ActivityLog(); // Create an activity log for this event
+				
+				compcreate.setAction("changed assignation for a daily task to " + who.getName());
+				compcreate.setTarget(task.getTitle());
+				compcreate.setTargetlink("#");
+				compcreate.setDate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDateTime());
+				compcreate.setUser(user);
+				actrepo.save(compcreate);
+				}
+			}
+			else {
+				task.setTitle(dailyedit.getTitle());
+				task.setNote(dailyedit.getNote());
+				task.setUntil(LocalDate.parse(dailyedit.getUntil()));
+				task.setStarteddate(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("Asia/Manila")).toLocalDate());
+				task.setDescription(dailyedit.getTaskdetail());
+				task.setUser(user);
+				dailyrepo.save(task);
+				
+				
+				for(PeopleModel pm : dailyedit.getMentions()) { // Get all personnels that was mentioned and save them
+					NotifyUser mention = new NotifyUser();
+						mention.setUserid(pm.getId());
+						mention.setUsername(pm.getName());
+						mention.setDaily(task);
+						notifrepo.save(mention);
+					
+				}
+				
+				User sa = userrepo.findSuperAdmin();
+				NotifyUser superadmin = new NotifyUser();
+				superadmin.setDaily(task);
+				superadmin.setUsername(sa.fullname());
+				superadmin.setUserid(sa.getId());
+				
+				notifrepo.save(superadmin);
+			}
+		}
+		
+		return "Task Updated!";
+	}
+
+	@Override
+	public DailyTaskModel getTask(long id) {
+		DailyTask task = dailyrepo.findById(id).orElse(null);
+		DailyTaskModel model = new DailyTaskModel();
+		model.setTitle(task.getTitle());
+		model.setUntil(task.getUntil().toString());
+		model.setTaskdetail(task.getDescription());
+		
+		return model;
 	}
 	
 

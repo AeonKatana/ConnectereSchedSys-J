@@ -1,10 +1,10 @@
 package com.oikostechnologies.schedsys.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +77,14 @@ public class PersonnelController {
 			System.out.println("Name :" + u.getFirstname());
 		}
 		return userservice.getAllByCompany(userdetail);
+	}
+	
+	@GetMapping("/companypeople")
+	@ResponseBody
+	public List<User> companyPeople(HttpSession session){
+		String companyname = (String)session.getAttribute("companyview");
+		System.out.println("Company Name :" + companyname);
+		return userservice.getAllByCompany(companyname);
 	}
 	
 	@GetMapping("/people")

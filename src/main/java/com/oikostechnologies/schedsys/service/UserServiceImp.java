@@ -14,6 +14,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import com.oikostechnologies.schedsys.datatable.repo.UserDataTable;
+import com.oikostechnologies.schedsys.entity.Company;
 import com.oikostechnologies.schedsys.entity.PasswordToken;
 import com.oikostechnologies.schedsys.entity.RegistrationToken;
 import com.oikostechnologies.schedsys.entity.User;
@@ -129,6 +130,11 @@ public class UserServiceImp implements UserService {
 	@Override
 	public User findById(long id) {
 		return userrepo.findById(id).orElse(null);
+	}
+
+	@Override
+	public List<User> getAllByCompany(String name) {
+		return userrepo.getAllByCompanyname(name);
 	}
 
 	

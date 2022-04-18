@@ -34,4 +34,7 @@ public interface DailyTaskRepo extends JpaRepository<DailyTask, Long> {
 			+ " dt.description like %:search% OR c.compname like %:search%) and dt.done = false order by dt.title asc")
 	List<DailyTask> searchTask(@Param("search") String search);
 	
+	
+	
+	
 }
